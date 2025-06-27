@@ -348,13 +348,13 @@ const SignupPage = () => {
 
             <button
               type="submit"
-              class="mt-8 w-full h-11  rounded-full text-white bg-purple-600 hover:bg-purple-700 cursor-pointer hover:opacity-90 transition-opacity"
+              class="mt-8 w-full h-11  rounded-full text-white bg-lime-500 hover:bg-lime-600 cursor-pointer hover:opacity-90 transition-opacity"
             >
               {loading ? "Creating..." : "Create"}
             </button>
             <p class="text-gray-600 text-sm  mt-4">
               Already have an account?{" "}
-              <Link class="text-purple-600 hover:underline" to="/login">
+              <Link class="text-lime-600 hover:underline" to="/login">
                 Sign in
               </Link>
             </p>
