@@ -1,5 +1,8 @@
 import React from "react";
+import { GoDotFill } from "react-icons/go";
 import { useNavigate } from "react-router-dom";
+import ServiceList from "../components/ServiceList";
+import Footer from "../components/Footer";
 
 const allServices = [
   {
@@ -142,84 +145,106 @@ const getStars = (rating) => {
 const AllServices = () => {
   const navigate = useNavigate();
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 py-10 px-100">
-      <h2 className="text-3xl font-bold text-center text-gray-800 mb-8">
-        All Services
-      </h2>
-      {/* Services Grid */}
-      <div className="max-w-7xl mx-auto grid gap-8 grid-cols-1 ">
-        {allServices.map((service) => (
-          <div
-            key={service.id}
-            onClick={() => navigate(`/service/${service.id}`)}
-            className="cursor-pointer bg-white rounded-3xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 border border-gray-100 p-0 flex items-center justify-between  group"
-          >
-            <div className="p-3">
-              <img
-                src={service.image}
-                alt={service.title}
-                className="h-45 object-cover rounded-3xl"
-              />
-            </div>
-            <div className="p-6 flex flex-col flex-1">
-              <h3 className="text-xl font-semibold text-gray-800">
-                {service.title}
-              </h3>
-              <p className="text-gray-600 mb-2 line-clamp-2">
-                {service.description}
-              </p>
-              <div className="flex items-center mb-1">
-                <span className="text-lg font-bold text-indigo-600 mr-2">
-                  ₹{service.price}
-                </span>
-                <span className="text-gray-400 text-sm">/ service</span>
-              </div>
-              <div className="flex items-center text-gray-500 text-sm mb-1">
-                <svg
-                  className="w-4 h-4 mr-1 text-blue-400"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                </svg>
-                {service.city}, {service.state}
-              </div>
-              <div className="flex items-center text-gray-500 text-sm mb-2">
-                <svg
-                  className="w-4 h-4 mr-1 text-green-400"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M5.121 17.804A13.937 13.937 0 0112 15c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                </svg>
-                {service.provider}
-              </div>
-              {getStars(service.rating)}
-            </div>
-            {/* <button className=" mt-0 bg-indigo-500 hover:bg-indigo-600 text-white font-semibold py-2 shadow transition-colors duration-200 group-hover:bg-indigo-600">
-              View Details
-            </button> */}
+    <>
+      <div className="min-h-scree my-30 px-6 md:px-16 lg:px-24 xl:px-32">
+        <div>
+          <div className="flex items-center gap-2 md:gap-4">
+            <span className="md:text-2xl">
+              <GoDotFill />
+            </span>
+            <p className="text-3xl lg:text-5xl ">Categories</p>
           </div>
-        ))}
+
+          <div className="mt-10 flex gap-5 lg:gap-10 flex-wrap items-center ">
+            <div className="flex flex-col items-center">
+              <img
+                className="h-30 w-30 object-cover rounded-4xl"
+                src="https://plus.unsplash.com/premium_photo-1684407616442-87bf0d69e8b4?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Y2xlYW5pbmd8ZW58MHx8MHx8fDA%3D"
+                alt=""
+              />
+              <p className="font-medium text-neutral-800">Cleaning</p>
+            </div>
+
+            <div className="flex flex-col items-center">
+              <img
+                className="h-30 w-30 object-cover rounded-4xl"
+                src="https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjN8fGVsZWN0cmljaWFufGVufDB8fDB8fHww"
+                alt=""
+              />
+              <p className="font-medium text-neutral-800">Electical</p>
+            </div>
+
+            <div className="flex flex-col items-center">
+              <img
+                className="h-30 w-30 object-cover rounded-4xl"
+                src="https://plus.unsplash.com/premium_photo-1663045239492-f1289d9440f4?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjl8fEhvbWUlMjBTZXJ2aWNlc3xlbnwwfHwwfHx8MA%3D%3D"
+                alt=""
+              />
+              <p className="font-medium text-neutral-800">Home Services</p>
+            </div>
+
+            <div className="flex flex-col items-center">
+              <img
+                className="h-30 w-30 object-cover rounded-4xl"
+                src="https://plus.unsplash.com/premium_photo-1664301132849-f52af765df79?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mzd8fFBsdW1iaW5nfGVufDB8fDB8fHww"
+                alt=""
+              />
+              <p className="font-medium text-neutral-800">Plumbing</p>
+            </div>
+
+            <div className="flex flex-col items-center">
+              <img
+                className="h-30 w-30 object-cover rounded-4xl"
+                src="https://plus.unsplash.com/premium_photo-1661342406124-740ae7a0dd0e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8QXBwbGlhbmNlcyUyMHJlcGFpcnxlbnwwfHwwfHx8MA%3D%3D"
+                alt=""
+              />
+              <p className="font-medium text-neutral-800">Appliances</p>
+            </div>
+
+            <div className="flex flex-col items-center">
+              <img
+                className="h-30 w-30 object-cover rounded-4xl"
+                src="https://images.unsplash.com/photo-1625047509252-ab38fb5c7343?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8QXV0b21vYmlsZSUyMHJlcGFpcnxlbnwwfHwwfHx8MA%3D%3D"
+                alt=""
+              />
+              <p className="font-medium text-neutral-800">Automobile</p>
+            </div>
+
+            <div className="flex flex-col items-center">
+              <img
+                className="h-30 w-30 object-cover rounded-4xl"
+                src="https://media.istockphoto.com/id/1452726459/photo/worker-hand-in-glove-holds-diagonal-pliers-on-a-yellow-background-idea-for-building-or.webp?a=1&b=1&s=612x612&w=0&k=20&c=0NrRPDk737XWRZ6FSXk_nTqGrf1KNkil1oj2TzgrntQ="
+                alt=""
+              />
+              <p className="font-medium text-neutral-800">Mechanic</p>
+            </div>
+
+            <div className="flex flex-col items-center">
+              <img
+                className="h-30 w-30 object-cover rounded-4xl"
+                src="https://plus.unsplash.com/premium_photo-1661956464824-8740e013d924?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8VHV0b3Jpbmd8ZW58MHx8MHx8fDA%3D"
+                alt=""
+              />
+              <p className="font-medium text-neutral-800">Tutoring</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-20 md:mt-30">
+          <div className="flex items-center gap-2 md:gap-4">
+            <span className="md:text-2xl">
+              <GoDotFill />
+            </span>
+            <p className="text-3xl lg:text-5xl ">All Services</p>
+          </div>
+
+          <div>
+            <ServiceList />
+          </div>
+        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 

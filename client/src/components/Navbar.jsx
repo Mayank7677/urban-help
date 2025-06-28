@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { logout } from "../features/auth/authSlice";
 import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Navbar = () => {
   const dispatch = useDispatch();
   const navLinks = [
     { name: "Home", path: "/" },
-    { name: "Products", path: "/" },
+    { name: "Services", path: "/all-services" },
     { name: "Contact", path: "/" },
     { name: "About", path: "/" },
   ];
@@ -22,14 +22,23 @@ const Navbar = () => {
     const token = localStorage.getItem("token");
     setIsLogin(!!token); // Convert to true/false directly
   }, []);
-  React.useEffect(() => {
+
+  const location = useLocation();
+  useEffect(() => {
+    if (location.pathname !== "/") {
+      setIsScrolled(true);
+      return;
+    } else {
+      setIsScrolled(false);
+    }
+    setIsScrolled((prev) => (location.pathname !== "/" ? true : prev));
+
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [location.pathname]);
   return (
     <div className="flex items-center  absolute">
       {/* <p>UrbanHelp</p>
@@ -68,9 +77,9 @@ const Navbar = () => {
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-4 lg:gap-8">
             {navLinks.map((link, i) => (
-              <a
+              <Link
                 key={i}
-                href={link.path}
+                to={link.path}
                 className={`group flex flex-col gap-0.5 ${
                   isScrolled ? "text-gray-700" : "text-white"
                 }`}
@@ -81,7 +90,7 @@ const Navbar = () => {
                     isScrolled ? "bg-gray-700" : "bg-white"
                   } h-0.5 w-0 group-hover:w-full transition-all duration-300`}
                 />
-              </a>
+              </Link>
             ))}
             <button
               className={`border px-4 py-1 text-sm font-light rounded-full cursor-pointer ${
@@ -141,9 +150,9 @@ const Navbar = () => {
             </button>
 
             {navLinks.map((link, i) => (
-              <a key={i} href={link.path} onClick={() => setIsMenuOpen(false)}>
+              <Link to={link.path} key={i} onClick={() => setIsMenuOpen(false)}>
                 {link.name}
-              </a>
+              </Link>
             ))}
 
             <button className="border px-4 py-1 text-sm font-light rounded-full cursor-pointer transition-all">

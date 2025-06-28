@@ -12,12 +12,21 @@ import HomePage from "./pages/HomePage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import AllServices from "./pages/AllServices";
+import ProviderSidebar from "./provider/ProviderSidebar";
+import AddService from "./provider/AddService";
+import MyServices from "./provider/MyServices";
 
 const App = () => {
   const location = useLocation();
   // Hide navbar on login/signup
   const hideNavbar =
     location.pathname === "/login" || location.pathname === "/signup";
+  const hideFooter =
+    location.pathname === "/login" ||
+    location.pathname === "/signup" ||
+    location.pathname === "/provider";
 
   const dispatch = useDispatch();
   const { token, user } = useSelector((state) => state.auth);
@@ -44,6 +53,10 @@ const App = () => {
           element={user ? <HomePage /> : <Navigate to={"/login"} />}
         />
         <Route
+          path="/all-services"
+          element={user ? <AllServices /> : <Navigate to={"/login"} />}
+        />
+        <Route
           path="/login"
           element={!user ? <LoginPage /> : <Navigate to={"/"} />}
         />
@@ -51,7 +64,13 @@ const App = () => {
           path="/signup"
           element={!user ? <SignupPage /> : <Navigate to={"/"} />}
         />
+
+        <Route path="/provider" element={<ProviderSidebar />}>
+          <Route index element={<MyServices />} />
+          <Route path="add-service" element={<AddService />} />
+        </Route>
       </Routes>
+      {/* {!hideFooter && <Footer />} */}
     </>
   );
 };

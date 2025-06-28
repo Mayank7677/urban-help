@@ -23,7 +23,7 @@ const serviceSchema = new mongoose.Schema(
     availableDays: [String], // ["Monday", "Wednesday"]
     rating: {
       type: Number,
-      default: 0,
+      default: 0, 
     },
     reviews: [
       {
