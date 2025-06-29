@@ -1,10 +1,23 @@
 import React, { useEffect } from "react";
 import { logout } from "../features/auth/authSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
+
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import assets from "../assets/assets";
 
 const Navbar = () => {
   const dispatch = useDispatch();
+  const { token, user } = useSelector((state) => state.auth);
+  console.log(user);
+
   const navLinks = [
     { name: "Home", path: "/" },
     { name: "Services", path: "/all-services" },
@@ -39,17 +52,12 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, [location.pathname]);
+
+  const isAdminRoute =
+    location.pathname.startsWith("/provider") ||
+    location.pathname.startsWith("/admin");
   return (
     <div className="flex items-center  absolute">
-      {/* <p>UrbanHelp</p>
-      <button
-        onClick={() => dispatch(logout())}
-        type="submit"
-        className="mt-3 px-5 py-2 rounded-full text-white bg-purple-600 hover:bg-purple-800 cursor-pointer hover:opacity-90 transition-opacity "
-      >
-        Logout
-      </button> */}
-
       <div ref={ref} className=" ">
         <p className="w-10 h-[500px]"></p>
         <nav
@@ -75,40 +83,76 @@ const Navbar = () => {
           </Link>
 
           {/* Desktop Nav */}
-          <div className="hidden md:flex items-center gap-4 lg:gap-8">
-            {navLinks.map((link, i) => (
-              <Link
-                key={i}
-                to={link.path}
-                className={`group flex flex-col gap-0.5 ${
-                  isScrolled ? "text-gray-700" : "text-white"
-                }`}
-              >
-                {link.name}
-                <div
-                  className={`${
-                    isScrolled ? "bg-gray-700" : "bg-white"
-                  } h-0.5 w-0 group-hover:w-full transition-all duration-300`}
-                />
+          {!isAdminRoute && (
+            <div className="hidden md:flex items-center gap-4 lg:gap-8">
+              {navLinks.map((link, i) => (
+                <Link
+                  key={i}
+                  onClick={() => window.scrollTo(0, 0)}
+                  to={link.path}
+                  className={`group flex flex-col gap-0.5 ${
+                    isScrolled ? "text-gray-700" : "text-white"
+                  }`}
+                >
+                  {link.name}
+                  <div
+                    className={`${
+                      isScrolled ? "bg-gray-700" : "bg-white"
+                    } h-0.5 w-0 group-hover:w-full transition-all duration-300`}
+                  />
+                </Link>
+              ))}
+              <Link to={"/provider"}>
+                <button
+                  className={`border px-4 py-1 text-sm font-light rounded-full cursor-pointer ${
+                    isScrolled ? "text-black" : "text-white"
+                  } transition-all`}
+                >
+                  Dashboard
+                </button>
               </Link>
-            ))}
-            <button
-              className={`border px-4 py-1 text-sm font-light rounded-full cursor-pointer ${
-                isScrolled ? "text-black" : "text-white"
-              } transition-all`}
-            >
-              New Launch
-            </button>
-          </div>
+            </div>
+          )}
 
           {/* Desktop Right */}
           <div className="hidden md:flex items-center gap-4">
-            <button
-              onClick={() => dispatch(logout())}
-              className="bg-green-800 text-white  px-8 py-1.5 rounded-full ml-4 transition-all duration-500 cursor-pointer"
-            >
-              Logout
-            </button>
+            <DropdownMenu>
+              <DropdownMenuTrigger>
+                <div className="flex items-center gap-2 cursor-pointer">
+                  <img
+                    className="h-8 w-8 rounded-full object-center"
+                    src={user?.profilePic || assets.avatar_icon}
+                    alt="Profile"
+                  />
+                  <p
+                    className={` text-xl ${
+                      isScrolled ? "text-gray-700" : "text-white"
+                    }`}
+                  >
+                    Hyy, {user?.name.split(" ")[0]}
+                  </p>
+                </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <Link to={"/profile"}>Edit Profile</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem>
+                  <Link to={"/profile/my-bookings"}>My Bookings</Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <button
+                    onClick={() => dispatch(logout())}
+                    className="text-red-500 font-serif text-sm"
+                  >
+                    Logout
+                  </button>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
 
           {/* Mobile Menu Button */}
@@ -155,12 +199,17 @@ const Navbar = () => {
               </Link>
             ))}
 
-            <button className="border px-4 py-1 text-sm font-light rounded-full cursor-pointer transition-all">
-              New Launch
-            </button>
+            <Link to={"/profile"} onClick={() => setIsMenuOpen(false)}>
+              <button className="border border-neutral-500 px-4 py-1 text-sm font-light rounded-full cursor-pointer transition-all">
+                Profile
+              </button>
+            </Link>
 
-            <button className="bg-black text-white px-8 py-2.5 rounded-full transition-all duration-500">
-              Login
+            <button
+              onClick={() => dispatch(logout())}
+              className="bg-black text-white px-8 py-2.5 rounded-full transition-all duration-500"
+            >
+              Logout
             </button>
           </div>
         </nav>

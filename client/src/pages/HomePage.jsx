@@ -3,30 +3,9 @@ import { GoDotFill } from "react-icons/go";
 import ServiceList from "../components/ServiceList";
 import { CiLocationArrow1 } from "react-icons/ci";
 import Footer from "../components/Footer";
-
-export const testimonialsData = [
-  {
-    id: 1,
-    text: "I've been using bg.removal for nearly two years, primarily for Instagram, and it has been incredibly user-friendly.",
-    author: "Richard Nelson",
-    // image: profile_img_1,
-    city: "Delhi",
-  },
-  {
-    id: 2,
-    text: "I've been using bg.removal for nearly 6 months, I had a fantastic experience. The quality is top-notch. I recommend others to try this app.",
-    author: "Donald Jackman",
-    // image: profile_img_2,
-    city: "Mumbai",
-  },
-  {
-    id: 3,
-    text: "I've been using bg.removal for nearly 6 months, I had a fantastic experience. The quality is top-notch. I recommend others to try this app.",
-    author: "Donald Jackman",
-    // image: profile_img_2,
-    city: "Mumbai",
-  },
-];
+import { Link } from "react-router-dom";
+import serviceCategoriesImg from "../utilities/serviceCategoriesImg";
+import testimonialsData from "../utilities/testimonialsData";
 
 const HomePage = () => {
   return (
@@ -189,86 +168,29 @@ const HomePage = () => {
               </p>
             </div>
 
-            <div className="flex items-center gap-2 border px-2 cursor-pointer rounded-4xl w-fit border-neutral-400 max-sm:ml-[8%]">
-              <p>view all</p>
-              <span>
-                <CiLocationArrow1 />
-              </span>
-            </div>
+            <Link to={"/all-services"} onClick={() => window.scrollTo(0, 0)}>
+              <div className="flex items-center gap-2 border px-2 py-1 cursor-pointer rounded-4xl w-fit border-neutral-400 max-sm:ml-[8%]">
+                <p>view all</p>
+                <span>
+                  <CiLocationArrow1 />
+                </span>
+              </div>
+            </Link>
           </div>
 
-          <div className="mt-10 flex gap-5 lg:gap-10 flex-wrap items-center ">
-            <div className="flex flex-col items-center">
-              <img
-                className="h-30 w-30 object-cover rounded-4xl"
-                src="https://plus.unsplash.com/premium_photo-1684407616442-87bf0d69e8b4?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8Y2xlYW5pbmd8ZW58MHx8MHx8fDA%3D"
-                alt=""
-              />
-              <p className="font-medium text-neutral-800">Cleaning</p>
-            </div>
-
-            <div className="flex flex-col items-center">
-              <img
-                className="h-30 w-30 object-cover rounded-4xl"
-                src="https://images.unsplash.com/photo-1621905251918-48416bd8575a?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjN8fGVsZWN0cmljaWFufGVufDB8fDB8fHww"
-                alt=""
-              />
-              <p className="font-medium text-neutral-800">Electical</p>
-            </div>
-
-            <div className="flex flex-col items-center">
-              <img
-                className="h-30 w-30 object-cover rounded-4xl"
-                src="https://plus.unsplash.com/premium_photo-1663045239492-f1289d9440f4?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mjl8fEhvbWUlMjBTZXJ2aWNlc3xlbnwwfHwwfHx8MA%3D%3D"
-                alt=""
-              />
-              <p className="font-medium text-neutral-800">Home Services</p>
-            </div>
-
-            <div className="flex flex-col items-center">
-              <img
-                className="h-30 w-30 object-cover rounded-4xl"
-                src="https://plus.unsplash.com/premium_photo-1664301132849-f52af765df79?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mzd8fFBsdW1iaW5nfGVufDB8fDB8fHww"
-                alt=""
-              />
-              <p className="font-medium text-neutral-800">Plumbing</p>
-            </div>
-
-            <div className="flex flex-col items-center">
-              <img
-                className="h-30 w-30 object-cover rounded-4xl"
-                src="https://plus.unsplash.com/premium_photo-1661342406124-740ae7a0dd0e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8QXBwbGlhbmNlcyUyMHJlcGFpcnxlbnwwfHwwfHx8MA%3D%3D"
-                alt=""
-              />
-              <p className="font-medium text-neutral-800">Appliances</p>
-            </div>
-
-            <div className="flex flex-col items-center">
-              <img
-                className="h-30 w-30 object-cover rounded-4xl"
-                src="https://images.unsplash.com/photo-1625047509252-ab38fb5c7343?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8QXV0b21vYmlsZSUyMHJlcGFpcnxlbnwwfHwwfHx8MA%3D%3D"
-                alt=""
-              />
-              <p className="font-medium text-neutral-800">Automobile</p>
-            </div>
-
-            <div className="flex flex-col items-center">
-              <img
-                className="h-30 w-30 object-cover rounded-4xl"
-                src="https://media.istockphoto.com/id/1452726459/photo/worker-hand-in-glove-holds-diagonal-pliers-on-a-yellow-background-idea-for-building-or.webp?a=1&b=1&s=612x612&w=0&k=20&c=0NrRPDk737XWRZ6FSXk_nTqGrf1KNkil1oj2TzgrntQ="
-                alt=""
-              />
-              <p className="font-medium text-neutral-800">Mechanic</p>
-            </div>
-
-            <div className="flex flex-col items-center">
-              <img
-                className="h-30 w-30 object-cover rounded-4xl"
-                src="https://plus.unsplash.com/premium_photo-1661956464824-8740e013d924?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8VHV0b3Jpbmd8ZW58MHx8MHx8fDA%3D"
-                alt=""
-              />
-              <p className="font-medium text-neutral-800">Tutoring</p>
-            </div>
+          <div className="mt-10 flex gap-5 lg:gap-10 flex-wrap items-center">
+            {serviceCategoriesImg.slice(0, 8).map((cat, index) => (
+              <Link to={`/services-cat/${cat.name.toLowerCase()}`} key={index}>
+                <div className="flex flex-col items-center">
+                  <img
+                    className="h-30 w-30 object-cover rounded-4xl"
+                    src={cat.image}
+                    alt={cat.name}
+                  />
+                  <p className="font-medium text-neutral-800">{cat.name}</p>
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
 
@@ -281,12 +203,14 @@ const HomePage = () => {
               <p className="text-3xl lg:text-5xl ">Our Services</p>
             </div>
 
-            <div className="flex items-center gap-2 border px-2 cursor-pointer rounded-4xl w-fit border-neutral-400 max-sm:ml-[8%]">
-              <p>view all</p>
-              <span>
-                <CiLocationArrow1 />
-              </span>
-            </div>
+            <Link to={"/all-services"} onClick={() => window.scrollTo(0, 230)}>
+              <div className="flex items-center gap-2 border px-2 py-1 cursor-pointer rounded-4xl w-fit border-neutral-400 max-sm:ml-[8%]">
+                <p>view all</p>
+                <span>
+                  <CiLocationArrow1 />
+                </span>
+              </div>
+            </Link>
           </div>
           <ServiceList />
         </div>
@@ -303,7 +227,7 @@ const HomePage = () => {
             {testimonialsData.map((dets, i) => (
               <div
                 key={i}
-                className="bg-white border border-neutral-300 rounded-xl p-6 max-w-lg m-auto"
+                className="bg-white border border-neutral-300 rounded-3xl p-6 max-w-lg m-auto"
               >
                 <p class="text-4xl text-gray-500">”</p>
                 <p className="text-md text-gray-500">{dets.text}</p>
@@ -496,7 +420,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      <Footer/>
+      <Footer />
     </div>
   );
 };

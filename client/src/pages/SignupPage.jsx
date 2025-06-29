@@ -9,116 +9,9 @@ import { IoLocationSharp } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { registerUser } from "../features/auth/authSlice";
 import toast from "react-hot-toast";
-
-const indianStates = [
-  "Andhra Pradesh",
-  "Arunachal Pradesh",
-  "Assam",
-  "Bihar",
-  "Chhattisgarh",
-  "Goa",
-  "Gujarat",
-  "Haryana",
-  "Himachal Pradesh",
-  "Jharkhand",
-  "Karnataka",
-  "Kerala",
-  "Madhya Pradesh",
-  "Maharashtra",
-  "Manipur",
-  "Meghalaya",
-  "Mizoram",
-  "Nagaland",
-  "Odisha",
-  "Punjab",
-  "Rajasthan",
-  "Sikkim",
-  "Tamil Nadu",
-  "Telangana",
-  "Tripura",
-  "Uttar Pradesh",
-  "Uttarakhand",
-  "West Bengal",
-  "Andaman and Nicobar Islands",
-  "Chandigarh",
-  "Dadra and Nagar Haveli and Daman and Diu",
-  "Delhi",
-  "Jammu and Kashmir",
-  "Ladakh",
-  "Lakshadweep",
-  "Puducherry",
-];
-
-const topCitiesByState = {
-  "Andhra Pradesh": [
-    "Visakhapatnam",
-    "Vijayawada",
-    "Guntur",
-    "Nellore",
-    "Kurnool",
-  ],
-  "Arunachal Pradesh": ["Itanagar", "Naharlagun", "Pasighat", "Tawang", "Ziro"],
-  Assam: ["Guwahati", "Silchar", "Dibrugarh", "Jorhat", "Tezpur"],
-  Bihar: ["Patna", "Gaya", "Bhagalpur", "Muzaffarpur", "Purnia"],
-  Chhattisgarh: ["Raipur", "Bhilai", "Bilaspur", "Korba", "Durg"],
-  Goa: ["Panaji", "Margao", "Vasco da Gama", "Mapusa", "Ponda"],
-  Gujarat: ["Ahmedabad", "Surat", "Vadodara", "Rajkot", "Bhavnagar"],
-  Haryana: ["Gurugram", "Faridabad", "Panipat", "Ambala", "Karnal"],
-  "Himachal Pradesh": ["Shimla", "Dharamshala", "Mandi", "Solan", "Kullu"],
-  Jharkhand: ["Ranchi", "Jamshedpur", "Dhanbad", "Bokaro", "Deoghar"],
-  Karnataka: ["Bangalore", "Mysore", "Mangalore", "Hubli", "Belgaum"],
-  Kerala: ["Thiruvananthapuram", "Kochi", "Kozhikode", "Kollam", "Thrissur"],
-  "Madhya Pradesh": ["Bhopal", "Indore", "Gwalior", "Jabalpur", "Ujjain"],
-  Maharashtra: ["Mumbai", "Pune", "Nagpur", "Nashik", "Thane"],
-  Manipur: ["Imphal", "Thoubal", "Bishnupur", "Kakching", "Churachandpur"],
-  Meghalaya: ["Shillong", "Tura", "Nongpoh", "Baghmara", "Jowai"],
-  Mizoram: ["Aizawl", "Lunglei", "Champhai", "Serchhip", "Kolasib"],
-  Nagaland: ["Kohima", "Dimapur", "Mokokchung", "Tuensang", "Wokha"],
-  Odisha: ["Bhubaneswar", "Cuttack", "Rourkela", "Sambalpur", "Berhampur"],
-  Punjab: ["Ludhiana", "Amritsar", "Jalandhar", "Patiala", "Bathinda"],
-  Rajasthan: ["Jaipur", "Jodhpur", "Udaipur", "Kota", "Ajmer"],
-  Sikkim: ["Gangtok", "Namchi", "Geyzing", "Mangan", "Rangpo"],
-  "Tamil Nadu": [
-    "Chennai",
-    "Coimbatore",
-    "Madurai",
-    "Tiruchirappalli",
-    "Salem",
-  ],
-  Telangana: ["Hyderabad", "Warangal", "Nizamabad", "Karimnagar", "Khammam"],
-  Tripura: ["Agartala", "Udaipur", "Dharmanagar", "Kailasahar", "Belonia"],
-  "Uttar Pradesh": ["Lucknow", "Kanpur", "Agra", "Varanasi", "Noida"],
-  Uttarakhand: ["Dehradun", "Haridwar", "Roorkee", "Haldwani", "Nainital"],
-  "West Bengal": ["Kolkata", "Asansol", "Siliguri", "Durgapur", "Howrah"],
-
-  // Union Territories
-  "Andaman and Nicobar Islands": [
-    "Port Blair",
-    "Diglipur",
-    "Mayabunder",
-    "Rangat",
-    "Havelock",
-  ],
-  Chandigarh: ["Chandigarh"],
-  "Dadra and Nagar Haveli and Daman and Diu": [
-    "Silvassa",
-    "Daman",
-    "Diu",
-    "Amli",
-    "Khanvel",
-  ],
-  Delhi: ["New Delhi", "Delhi", "Dwarka", "Rohini", "Saket"],
-  "Jammu and Kashmir": [
-    "Srinagar",
-    "Jammu",
-    "Anantnag",
-    "Baramulla",
-    "Udhampur",
-  ],
-  Ladakh: ["Leh", "Kargil", "Nubra", "Diskit", "Dras"],
-  Lakshadweep: ["Kavaratti", "Agatti", "Minicoy", "Amini", "Andrott"],
-  Puducherry: ["Puducherry", "Karaikal", "Mahe", "Yanam", "Oulgaret"],
-};
+import indianStates from "../utilities/indianStates";
+import topCitiesByState from "../utilities/topCitiesByState";
+import { HiOutlineDevicePhoneMobile } from "react-icons/hi2";
 
 const SignupPage = () => {
   let dispatch = useDispatch();
@@ -127,6 +20,7 @@ const SignupPage = () => {
 
   const [userData, setUserData] = useState({
     name: "",
+    phone: "",
     email: "",
     password: "",
     city: "",
@@ -144,15 +38,13 @@ const SignupPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(userData);
-      let result = await dispatch(registerUser(userData));
-      console.log(result)
+    let result = await dispatch(registerUser(userData));
+    console.log(result);
 
     if (result.meta.requestStatus === "fulfilled") {
       toast.success("Account Created successful!");
       navigate("/"); // go to home or dashboard
-      }
-      
-
+    }
   };
 
   return (
@@ -178,7 +70,7 @@ const SignupPage = () => {
               />
             </button>
 
-            <div class="flex items-center gap-4 w-full my-5">
+            <div class="flex items-center gap-4 w-full my-3">
               <div class="w-full h-px bg-gray-600"></div>
               <p class="w-full text-nowrap text-sm text-gray-800 ">
                 or create an account
@@ -196,6 +88,21 @@ const SignupPage = () => {
                 value={userData.name}
                 onChange={handleChange}
                 placeholder="Name"
+                class="bg-transparent text-gray-700 placeholder-gray-500 outline-none text-sm  w-full h-full "
+                required
+              />
+            </div>
+
+            <div class="flex items-center mt-4 w-full bg-transparent border border-gray-500 h-12 rounded-full overflow-hidden pl-6 gap-2">
+              <p className="text-md font-semibold text-gray-500 -ml-1">
+                <HiOutlineDevicePhoneMobile />
+              </p>
+              <input
+                type="text"
+                placeholder="Phone Number "
+                name="phone"
+                value={userData.phone}
+                onChange={handleChange}
                 class="bg-transparent text-gray-700 placeholder-gray-500 outline-none text-sm  w-full h-full "
                 required
               />
@@ -348,11 +255,11 @@ const SignupPage = () => {
 
             <button
               type="submit"
-              class="mt-8 w-full h-11  rounded-full text-white bg-lime-500 hover:bg-lime-600 cursor-pointer hover:opacity-90 transition-opacity"
+              class="mt-4 w-full h-11  rounded-full text-white bg-lime-500 hover:bg-lime-600 cursor-pointer hover:opacity-90 transition-opacity"
             >
               {loading ? "Creating..." : "Create"}
             </button>
-            <p class="text-gray-600 text-sm  mt-4">
+            <p class="text-gray-600 text-sm  mt-2">
               Already have an account?{" "}
               <Link class="text-lime-600 hover:underline" to="/login">
                 Sign in

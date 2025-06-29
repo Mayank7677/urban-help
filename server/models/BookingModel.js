@@ -17,6 +17,19 @@ const bookingSchema = new mongoose.Schema(
       ref: "users",
       required: true,
     },
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    contactNumber: {
+      type: String,
+      required: true,
+    },
+    address: {
+      type: String,
+      required: true,
+    },
     date: {
       type: String,
       required: true,

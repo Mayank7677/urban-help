@@ -17,6 +17,13 @@ import AllServices from "./pages/AllServices";
 import ProviderSidebar from "./provider/ProviderSidebar";
 import AddService from "./provider/AddService";
 import MyServices from "./provider/MyServices";
+import ManageBookings from "./provider/ManageBookings";
+import ServicesCtgry from "./pages/ServicesCtgry";
+import ServiceDetail from "./pages/ServiceDetail";
+import ProfileSidebar from "./profile/ProfileSidebar";
+import EditProfile from "./profile/EditProfile";
+import MyBookings from "./profile/MyBookings";
+import { Toaster } from "react-hot-toast";
 
 const App = () => {
   const location = useLocation();
@@ -57,6 +64,14 @@ const App = () => {
           element={user ? <AllServices /> : <Navigate to={"/login"} />}
         />
         <Route
+          path="/services-cat/:category"
+          element={user ? <ServicesCtgry /> : <Navigate to={"/login"} />}
+        />
+        <Route
+          path="/service-details/:id"
+          element={user ? <ServiceDetail /> : <Navigate to={"/login"} />}
+        />
+        <Route
           path="/login"
           element={!user ? <LoginPage /> : <Navigate to={"/"} />}
         />
@@ -68,8 +83,19 @@ const App = () => {
         <Route path="/provider" element={<ProviderSidebar />}>
           <Route index element={<MyServices />} />
           <Route path="add-service" element={<AddService />} />
+          <Route path="manage-bookings" element={<ManageBookings />} />
+        </Route>
+
+        <Route
+          path="/profile"
+          element={user ? <ProfileSidebar /> : <Navigate to={"/login"} />}
+        >
+          <Route index element={<EditProfile />} />
+          <Route path="my-bookings" element={<MyBookings />} />
         </Route>
       </Routes>
+
+      <Toaster position="top-center" reverseOrder={false} />
       {/* {!hideFooter && <Footer />} */}
     </>
   );

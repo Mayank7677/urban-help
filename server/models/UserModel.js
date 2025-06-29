@@ -7,6 +7,10 @@ const userSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    phone: {
+      type: Number,
+      required: true,
+    },
 
     email: {
       type: String,
@@ -23,6 +27,10 @@ const userSchema = new mongoose.Schema(
       type: String,
       enum: ["customer", "provider", "admin"],
       default: "customer",
+    },
+    profilePic: {
+      type: String,
+      default: "",
     },
 
     city: String,

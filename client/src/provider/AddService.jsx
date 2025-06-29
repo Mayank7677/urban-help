@@ -1,29 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { GoDotFill } from "react-icons/go";
 
-const indianStates = [
-  "Andhra Pradesh",
-  "Delhi",
-  "Maharashtra",
-  "Karnataka",
-  "Tamil Nadu",
-  "Uttar Pradesh",
-];
-
-const topCitiesByState = {
-  "Andhra Pradesh": ["Visakhapatnam", "Vijayawada"],
-  Delhi: ["New Delhi", "Dwarka", "Rohini"],
-  Maharashtra: ["Mumbai", "Pune", "Nagpur"],
-  Karnataka: ["Bangalore", "Mysore"],
-  "Tamil Nadu": ["Chennai", "Coimbatore"],
-  "Uttar Pradesh": ["Lucknow", "Kanpur"],
-};
-
-const serviceCategories = {
-  Plumbing: ["Leak Fixing", "Pipe Installation", "Bathroom Fittings"],
-  Electrical: ["Wiring", "Fan Installation", "Inverter Setup"],
-  Cleaning: ["Home Cleaning", "Office Cleaning", "Sofa Cleaning"],
-};
+import indianStates from "../utilities/indianStates";
+import topCitiesByState from "../utilities/topCitiesByState";
+import serviceCategories from "../utilities/serviceCategories";
 
 const AddService = () => {
   const [formData, setFormData] = useState({

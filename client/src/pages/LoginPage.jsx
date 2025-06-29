@@ -27,10 +27,12 @@ const LoginPage = () => {
     e.preventDefault();
 
     const result = await dispatch(loginUser(userData));
+    console.log(result);
 
     if (result.meta.requestStatus === "fulfilled") {
       toast.success("Login successful!");
-      navigate("/"); // go to home or dashboard
+      if (result.payload.user.role === "provider") navigate("/provider");
+      else navigate("/"); // go to home or dashboard
     }
   };
 

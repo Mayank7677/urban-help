@@ -1,5 +1,6 @@
 import React from "react";
 import { GoDotFill } from "react-icons/go";
+import { Link } from "react-router-dom";
 
 // Placeholder data
 const services = [
@@ -114,65 +115,64 @@ const ServiceList = () => {
     <div className="mt-10">
       <div className="max-w-7xl mx-auto grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
         {services.map((service) => (
-          <div
-            key={service.id}
-            className="bg-white rounded-2xl cursor-pointer  transition-shadow duration-300 border border-gray-300 p-6 flex flex-col justify-between hover:shadow-[0px_0px_0px_1px_rgba(0,0,0,0.06),0px_1px_1px_-0.5px_rgba(0,0,0,0.06),0px_3px_3px_-1.5px_rgba(0,0,0,0.06),_0px_6px_6px_-3px_rgba(0,0,0,0.06),0px_12px_12px_-6px_rgba(0,0,0,0.06),0px_24px_24px_-12px_rgba(0,0,0,0.06)]"
-          >
-            <div>
-              <div className="flex gap-2 items-center mb-2">
-                <h3 className="text-xl font-medium text-gray-800 ">
-                  {service.title}
-                </h3>
+          <Link to={`/service-details/${service.id}`} key={service.id}>
+            <div className="bg-white rounded-2xl cursor-pointer  transition-shadow duration-300 border border-gray-300 p-6 flex flex-col justify-between hover:shadow-[0px_0px_0px_1px_rgba(0,0,0,0.06),0px_1px_1px_-0.5px_rgba(0,0,0,0.06),0px_3px_3px_-1.5px_rgba(0,0,0,0.06),_0px_6px_6px_-3px_rgba(0,0,0,0.06),0px_12px_12px_-6px_rgba(0,0,0,0.06),0px_24px_24px_-12px_rgba(0,0,0,0.06)]">
+              <div>
+                <div className="flex gap-2 items-center mb-2">
+                  <h3 className="text-xl font-medium text-gray-800 ">
+                    {service.title}
+                  </h3>
+                </div>
+                <p className="text-gray-600 mb-3 line-clamp-2">
+                  {service.description}
+                </p>
+                <div className="flex items-center mb-2">
+                  <span className="text-lg font-bold text-indigo-600 mr-2">
+                    ₹{service.price}
+                  </span>
+                  <span className="text-gray-400 text-sm">/ service</span>
+                </div>
+                <div className="flex items-center text-gray-500 text-sm mb-1">
+                  <svg
+                    className="w-4 h-4 mr-1 text-blue-400"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"
+                    />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                  </svg>
+                  {service.city}, {service.state}
+                </div>
+                <div className="flex items-center text-gray-500 text-sm mb-2">
+                  <svg
+                    className="w-4 h-4 mr-1 text-green-400"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M5.121 17.804A13.937 13.937 0 0112 15c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z"
+                    />
+                  </svg>
+                  {service.provider}
+                </div>
+                {getStars(service.rating)}
               </div>
-              <p className="text-gray-600 mb-3 line-clamp-2">
-                {service.description}
-              </p>
-              <div className="flex items-center mb-2">
-                <span className="text-lg font-bold text-indigo-600 mr-2">
-                  ₹{service.price}
-                </span>
-                <span className="text-gray-400 text-sm">/ service</span>
-              </div>
-              <div className="flex items-center text-gray-500 text-sm mb-1">
-                <svg
-                  className="w-4 h-4 mr-1 text-blue-400"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M17.657 16.657L13.414 20.9a2 2 0 01-2.828 0l-4.243-4.243a8 8 0 1111.314 0z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                </svg>
-                {service.city}, {service.state}
-              </div>
-              <div className="flex items-center text-gray-500 text-sm mb-2">
-                <svg
-                  className="w-4 h-4 mr-1 text-green-400"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M5.121 17.804A13.937 13.937 0 0112 15c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0z"
-                  />
-                </svg>
-                {service.provider}
-              </div>
-              {getStars(service.rating)}
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
