@@ -24,6 +24,9 @@ import ProfileSidebar from "./profile/ProfileSidebar";
 import EditProfile from "./profile/EditProfile";
 import MyBookings from "./profile/MyBookings";
 import { Toaster } from "react-hot-toast";
+import BookService from "./pages/BookService";
+import { getAllServices } from "./features/service/serviceSlice";
+import CompleteBookings from "./provider/CompleteBookings";
 
 const App = () => {
   const location = useLocation();
@@ -37,6 +40,12 @@ const App = () => {
 
   const dispatch = useDispatch();
   const { token, user } = useSelector((state) => state.auth);
+  const { services } = useSelector((state) => state.service);
+  console.log(services);
+
+  useEffect(() => {
+    dispatch(getAllServices());
+  }, []);
 
   useEffect(() => {
     if (token && !user) {
@@ -64,6 +73,10 @@ const App = () => {
           element={user ? <AllServices /> : <Navigate to={"/login"} />}
         />
         <Route
+          path="/book-service"
+          element={user ? <BookService /> : <Navigate to={"/login"} />}
+        />
+        <Route
           path="/services-cat/:category"
           element={user ? <ServicesCtgry /> : <Navigate to={"/login"} />}
         />
@@ -84,6 +97,7 @@ const App = () => {
           <Route index element={<MyServices />} />
           <Route path="add-service" element={<AddService />} />
           <Route path="manage-bookings" element={<ManageBookings />} />
+          <Route path="complete-bookings" element={<CompleteBookings />} />
         </Route>
 
         <Route

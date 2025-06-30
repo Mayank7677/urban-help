@@ -20,10 +20,9 @@ const serviceSchema = new mongoose.Schema(
     },
     city: String,
     state: String,
-    availableDays: [String], // ["Monday", "Wednesday"]
     rating: {
       type: Number,
-      default: 0, 
+      default: 0,
     },
     reviews: [
       {
@@ -32,9 +31,16 @@ const serviceSchema = new mongoose.Schema(
         rating: Number,
       },
     ],
+    images: {
+      type: Array,
+      required: true,
+    },
+    contactNumber: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );
 
 module.exports = mongoose.model("services", serviceSchema);
-                              

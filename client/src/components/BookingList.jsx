@@ -1,12 +1,22 @@
-import React from 'react'
+import React from "react";
 import { CgSmartphone } from "react-icons/cg";
 import { BiUser } from "react-icons/bi";
 import { LuUsersRound } from "react-icons/lu";
-import { CiLocationOn } from "react-icons/ci";
+import { CiCalendarDate, CiLocationOn } from "react-icons/ci";
 import { HiOutlineMail } from "react-icons/hi";
 import { GoLocation } from "react-icons/go";
-import { PiCityThin } from "react-icons/pi";
-import { Link } from 'react-router-dom';
+import {
+  PiAddressBookTabsThin,
+  PiAddressBookThin,
+  PiCityThin,
+} from "react-icons/pi";
+import { Link } from "react-router-dom";
+import {
+  useGetProviderBookingsQuery,
+  useUpdateBookingMutation,
+} from "../features/booking/bookingApi";
+import { IoIosTimer } from "react-icons/io";
+import toast from "react-hot-toast";
 
 const getStars = (rating) => {
   const fullStars = Math.floor(rating);
@@ -45,120 +55,190 @@ const getStars = (rating) => {
     </span>
   );
 };
-const BookingList = () => {
+
+const BookingList = ({ status }) => {
+  const {
+    data,
+    error: getError,
+    isLoading: getLoading,
+    refetch,
+  } = useGetProviderBookingsQuery({ status });
+
+  console.log(data);
+
+  const [
+    updateBooking,
+    { isLoading: updateLoading, isSuccess, error: updateError },
+  ] = useUpdateBookingMutation();
+
+  const handleStatusChange = async (newStatus, bookingId) => {
+    try {
+      const res = await updateBooking({
+        id: bookingId,
+        status: newStatus,
+      }).unwrap();
+      console.log("Update successful:", res.message);
+      toast.success("Update successful");
+
+      refetch(); // Refreshing the bookings list
+    } catch (err) {
+      console.error("Update failed:", err?.data?.message || err.message);
+      toast.error("Update failed");
+    }
+  };
+
   return (
     <div>
       <div className="sm:mt-4 w-full ">
-              <div className="hidden md:grid md:grid-cols-[3fr_2fr_2fr_1fr] w-full border-b border-gray-300 font-medium text-base py-3 ">
-                <div className="">Service Details</div>
-                <div className="">Location</div>
-                <div className="">Personal Details</div>
-                <div className="pl-[3%]">Manage</div>
+        <div
+          className={`hidden lg:grid lg:grid-cols-[3fr_1.5fr_1.5fr_2fr_1fr] w-full border-b border-gray-300 font-medium text-base py-3 `}
+        >
+          <div className="">Service Details</div>
+          <div className="">Location</div>
+          <div className="">Date & Time</div>
+          <div className="">Customer Details</div>
+          {status !== "Completed" && (
+            <div className="pl-[3%]">
+              {status === "Pending" || status === "Accepted"
+                ? "Manage"
+                : "Status"}
+            </div>
+          )}
+        </div>
+
+        {getLoading ? (
+          <p className="mt-10 text-center">Loading...</p>
+        ) : data.length <= 0 ? (
+          <p className="mt-10">No available Bookings</p>
+        ) : (
+          [...data].reverse().map((dets, i) => (
+            <div className="grid grid-cols-1 max-md:gap-5 lg:grid-cols-[3fr_1.5fr_1.5fr_2fr_1fr] w-full border-b border-gray-300 py-6 first:border-t ">
+              <div className="flex flex-col md:flex-row ">
+                <img
+                  className="min-md:w-44 rounded-2xl shadow object-cover"
+                  src={dets.service.images[0]}
+                  alt=""
+                />
+                <div className="flex flex-col gap-1 max-md:mt-3 min-md:ml-4">
+                  <div>
+                    <p className="text-xl  tracking-tight">
+                      {dets.service.title} ,
+                    </p>
+                    <p className="text-xl  tracking-tight">
+                      {dets.service.category}
+                    </p>
+                  </div>
+
+                  <div className="flex items-center mb-2">
+                    <span className="text-lg font-bold text-indigo-600 mr-2">
+                      ₹{dets.service.price}
+                    </span>
+                    <span className="text-gray-400 text-sm">/ service</span>
+                  </div>
+                  {getStars(4.7)}
+                </div>
               </div>
-      
-              <div className="grid grid-cols-1 max-md:gap-5 md:grid-cols-[3fr_2fr_2fr_1fr] w-full border-b border-gray-300 py-6 first:border-t ">
-                <div className="flex flex-col md:flex-row ">
-                  <img
-                    className="min-md:w-44 rounded-2xl shadow object-cover"
-                    src="https://res.cloudinary.com/dqfhn7rw3/image/upload/v1749667393/hotel_rooms/vxkic8mu89gqidzxl6qw.jpg"
-                    alt=""
-                  />
-                  <div className="flex flex-col gap-1 max-md:mt-3 min-md:ml-4">
-                    <div>
-                      <p className="text-xl  tracking-tight">Cleaning ,</p>
-                      <p className="text-xl  tracking-tight">Home Cleaning</p>
-                    </div>
-      
-                    <div className="flex items-center mb-2">
-                      <span className="text-lg font-bold text-indigo-600 mr-2">
-                        ₹599
-                      </span>
-                      <span className="text-gray-400 text-sm">/ service</span>
-                    </div>
-                    {getStars(4.7)}
-                  </div>
+
+              <div className="flex flex-col gap-1.5 max-md:mt-3 mt-5">
+                <div class="flex items-center gap-2  text-gray-700  ">
+                  <PiAddressBookTabsThin className={`text-lg  text-black} `} />
+                  <span className={`text-gray-700}`}>{dets.address}</span>
                 </div>
-      
-                <div className="flex flex-col gap-1.5 max-md:mt-3 mt-5">
-                  <div class="flex items-center gap-2 text-xl text-gray-700  ">
-                    <GoLocation className={` text-xl text-black} `} />
-                    <span
-                      className={`text-gray-700
-                          }`}
-                    >
-                      Rajasthan,
-                    </span>
-                  </div>
-                  <div class="flex items-center gap-2 text-xl text-gray-700  ">
-                    <PiCityThin
-                      className={`  text-black
-                          } `}
-                    />
-                    <span
-                      className={`text-gray-700
-                          }`}
-                    >
-                      Jaipur
-                    </span>
-                  </div>
+
+                <div class="flex items-center gap-2  text-gray-700  ">
+                  <PiCityThin className={`text-black } `} />
+                  <span className={`text-gray-700 }`}>{dets.service.city}</span>
                 </div>
-      
-                <div className="flex flex-col gap-1.5 max-md:mt-3 mt-5">
-                  <div class="flex items-center gap-1  text-gray-700 tracking-tight ">
-                    <BiUser
-                      className={` text-lg text-black
-                          } `}
-                    />
-                    <span
-                      className={`
-                            text-gray-700
-                          }`}
-                    >
-                      Name: asdfghj
-                    </span>
-                  </div>
-                  <div class="flex items-center gap-1  text-gray-700 tracking-tight ">
-                    <HiOutlineMail
-                      className={` text-lg text-black
-                          } `}
-                    />
-                    <span
-                      className={`text-gray-700
-                          }`}
-                    >
-                      Email: abc@gmail.com
-                    </span>
-                  </div>
-                  <div class="flex items-center gap-1  text-gray-700 tracking-tight ">
-                    <CgSmartphone
-                      className={` text-lg text-black
-                          } `}
-                    />
-                    <span className={`text-gray-700                    }`}>
-                      Phone: 12345678
-                    </span>
-                  </div>
+
+                <div class="flex items-center gap-2  text-gray-700  ">
+                  <GoLocation className={` text-xl text-black} `} />
+                  <span className={`text-gray-700}`}>
+                    {dets.service.state},
+                  </span>
                 </div>
-      
-                <div className="flex flex-col w-fit md:items-center">
+              </div>
+
+              <div className="flex flex-col gap-1.5 max-md:mt-3 mt-5">
+                <div class="flex items-center gap-1  text-gray-700 tracking-tight ">
+                  <IoIosTimer className={` text-lg text-black} `} />
+                  <span className={` text-gray-700}`}>{dets.time}</span>
+                </div>
+
+                <div class="flex items-center gap-1  text-gray-700 tracking-tight ">
+                  <CiCalendarDate className={` text-lg text-black} `} />
+                  <span className={`text-gray-700}`}>{dets.date}</span>
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-1.5 max-md:mt-3 mt-5">
+                <div class="flex items-center gap-1  text-gray-700 tracking-tight ">
+                  <BiUser className={` text-lg text-black} `} />
+                  <span className={`text-gray-700}`}>{dets.user.name}</span>
+                </div>
+                <div class="flex items-center gap-1  text-gray-700 tracking-tight ">
+                  <HiOutlineMail className={` text-lg text-black} `} />
+                  <span className={`text-gray-700}`}>{dets.user.email}</span>
+                </div>
+                <div class="flex items-center gap-1  text-gray-700 tracking-tight ">
+                  <CgSmartphone className={` text-lg text-black} `} />
+                  <span className={`text-gray-700 }`}>{dets.user.phone}</span>
+                </div>
+              </div>
+
+              {status !== "Completed" && (
+                <div className="flex flex-col w-fit md:items-center ">
                   <>
-                    <Link>
-                      <button class="px-4 py-1.5 mt-4 text-xs border border-yellow-400 text-yellow-400 rounded-full hover:bg-gray-50 transition-all cursor-pointer font-serif">
-                        Edit
-                      </button>
-                    </Link>
-                    <button class="px-4 py-1.5 mt-4 text-xs border border-blue-500 text-blue-500 rounded-full hover:bg-gray-50 transition-all cursor-pointer font-serif">
-                      Inactive
-                    </button>
-                    <button class="px-4 py-1.5 mt-4 text-xs border border-red-500 text-red-500 rounded-full hover:bg-gray-50 transition-all cursor-pointer font-serif">
-                      Delete
-                    </button>
+                    {status === "Accepted" && (
+                      <>
+                        <button
+                          onClick={() =>
+                            handleStatusChange("Completed", dets._id)
+                          }
+                          class="px-4 py-1.5 mt-4 md:mt-10 text-xs  border border-blue-600 text-blue-600 rounded-full hover:bg-gray-50 transition-all cursor-pointer font-serif"
+                        >
+                          Complete
+                        </button>
+                      </>
+                    )}
+
+                    {status === "Rejected" && (
+                      <>
+                        <button class="px-2 py-1.5 mt-4 md:mt-8    text-red-500   rounded-full hover:bg-gray-50 transition-all cursor-pointer font-serif">
+                          Rejected
+                        </button>
+                      </>
+                    )}
+
+                    {status === "Pending" && (
+                      <>
+                        <button
+                          onClick={() =>
+                            handleStatusChange("Accepted", dets._id)
+                          }
+                          class="px-4 py-1.5 mt-4 text-xs border border-blue-500 text-blue-500 rounded-full hover:bg-gray-50 transition-all cursor-pointer font-serif"
+                        >
+                          Accept
+                        </button>
+
+                        <button
+                          onClick={() =>
+                            handleStatusChange("Rejected", dets._id)
+                          }
+                          class="px-4 py-1.5 mt-4 text-xs border border-red-500 text-red-500 rounded-full hover:bg-gray-50 transition-all cursor-pointer font-serif"
+                        >
+                          Reject
+                        </button>
+                      </>
+                    )}
                   </>
                 </div>
-              </div>
+              )}
             </div>
+          ))
+        )}
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default BookingList
+export default BookingList;

@@ -4,6 +4,13 @@ import { Link, useNavigate } from "react-router-dom";
 import ServiceList from "../components/ServiceList";
 import Footer from "../components/Footer";
 import serviceCategoriesImg from "../utilities/serviceCategoriesImg";
+import indianStates from "../utilities/indianStates";
+import { useState } from "react";
+import topCitiesByState from "../utilities/topCitiesByState";
+import serviceCategories from "../utilities/serviceCategories";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllServices } from "../features/service/serviceSlice";
 
 const allServices = [
   {
@@ -145,6 +152,39 @@ const getStars = (rating) => {
 
 const AllServices = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { services } = useSelector((state) => state.service);
+  console.log(services);
+
+  useEffect(() => {
+    dispatch(getAllServices());
+  }, []);
+
+  const [formData, setFormData] = useState({
+    state: "",
+    city: "",
+    category: "",
+    title: "",
+  });
+
+  const [cities, setCities] = useState([]);
+  const [titles, setTitles] = useState([]);
+
+  useEffect(() => {
+    if (formData.state) {
+      setCities(topCitiesByState[formData.state] || []);
+    }
+  }, [formData.state]);
+
+  useEffect(() => {
+    if (formData.category) {
+      setTitles(serviceCategories[formData.category] || []);
+    }
+  }, [formData.category]);
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+  };
   return (
     <>
       <div className=" my-20 md:my-30 px-6 md:px-16 lg:px-24 xl:px-32">
@@ -161,7 +201,11 @@ const AllServices = () => {
             className="mt-10 flex gap-5 lg:gap-10 flex-wrap items-center"
           >
             {serviceCategoriesImg.map((cat, index) => (
-              <Link to={`/services-cat/${cat.name.toLowerCase()}`} key={index}>
+              <Link
+                to={`/services-cat/${cat.name}`}
+                onClick={() => window.scrollTo(0, 0)}
+                key={index}
+              >
                 <div className="flex flex-col items-center">
                   <img
                     className="h-30 w-30 object-cover rounded-4xl"
@@ -183,8 +227,102 @@ const AllServices = () => {
             <p className="text-3xl lg:text-5xl ">All Services</p>
           </div>
 
+          <div className="sm:flex gap-5 mt-5">
+            <div className="flex flex-col sm:flex-row items-center gap-5 w-full">
+              <div className="w-full">
+                <label
+                  htmlFor="state"
+                  className="block  font-medium text-gray-700"
+                >
+                  State
+                </label>
+                <select
+                  id="state"
+                  value={formData.state}
+                  onChange={handleChange}
+                  className="mt-1 w-full  px-3 py-2  rounded-xl font-normal border border-gray-400 sm:text-sm outline-none"
+                >
+                  <option value="">Select State</option>
+                  {indianStates.map((state) => (
+                    <option key={state} value={state}>
+                      {state}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="w-full">
+                <label
+                  htmlFor="city"
+                  className="block font-medium text-gray-700"
+                >
+                  City
+                </label>
+                <select
+                  id="city"
+                  value={formData.city}
+                  onChange={handleChange}
+                  className="mt-1 w-full  px-3 py-2  rounded-xl font-normal border border-gray-400 sm:text-sm outline-none"
+                >
+                  <option value="">Select City</option>
+                  {cities.map((city) => (
+                    <option key={city} value={city}>
+                      {city}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-center gap-5 w-full">
+              <div className="w-full">
+                <label
+                  htmlFor="category"
+                  className="block  font-medium text-gray-700"
+                >
+                  Category
+                </label>
+                <select
+                  id="category"
+                  value={formData.category}
+                  onChange={handleChange}
+                  className="mt-1 w-full  px-3 py-2  rounded-xl font-normal border border-gray-400 sm:text-sm outline-none"
+                >
+                  <option value="">Select Category</option>
+                  {Object.keys(serviceCategories).map((cat) => (
+                    <option key={cat} value={cat}>
+                      {cat}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="w-full">
+                <label
+                  htmlFor="title"
+                  className="block  font-medium text-gray-700"
+                >
+                  Service Title
+                </label>
+                <select
+                  id="title"
+                  value={formData.title}
+                  onChange={handleChange}
+                  className="mt-1 w-full  px-3 py-2  rounded-xl font-normal border border-gray-400 sm:text-sm outline-none"
+                >
+                  <option value="">Select Title</option>
+                  {titles.map((title) => (
+                    <option key={title} value={title}>
+                      {title}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+          </div>
+
           <div>
-            <ServiceList />
+            <ServiceList data={services} />
           </div>
         </div>
       </div>

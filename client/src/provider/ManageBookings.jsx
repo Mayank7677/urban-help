@@ -2,8 +2,10 @@ import React from "react";
 import { GoDotFill } from "react-icons/go";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import BookingList from "../components/BookingList";
+import { useGetProviderBookingsQuery } from "../features/booking/bookingApi";
 
 const ManageBookings = () => {
+  
   return (
     <div className="px-2 sm:px-5 pb-10 w-full">
       <div className="flex items-center gap-2 md:gap-4">
@@ -29,13 +31,13 @@ const ManageBookings = () => {
             </TabsTrigger>
           </TabsList>
           <TabsContent value="pending">
-            <BookingList />
+            <BookingList status={"Pending"} />
           </TabsContent>
           <TabsContent value="accepted">
-            <BookingList />
+            <BookingList status={"Accepted"} />
           </TabsContent>
           <TabsContent value="cancelled">
-            <BookingList />
+            <BookingList status={"Rejected"} />
           </TabsContent>
         </Tabs>
       </div>

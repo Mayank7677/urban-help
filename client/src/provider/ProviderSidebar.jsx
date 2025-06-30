@@ -4,7 +4,7 @@ import { RxDashboard } from "react-icons/rx";
 import { VscAdd } from "react-icons/vsc";
 import { CiBookmarkMinus } from "react-icons/ci";
 import { TfiHome } from "react-icons/tfi";
-
+import { IoMdDoneAll } from "react-icons/io";
 
 const ProviderSidebar = () => {
   
@@ -16,6 +16,11 @@ const ProviderSidebar = () => {
       name: "Manage Bookings",
       path: "/provider/manage-bookings",
       icon: <CiBookmarkMinus />,
+    },
+    {
+      name: "Complete Bookings",
+      path: "/provider/complete-bookings",
+      icon: <IoMdDoneAll />,
     },
   ];
 

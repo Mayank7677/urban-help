@@ -6,8 +6,18 @@ import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
 import serviceCategoriesImg from "../utilities/serviceCategoriesImg";
 import testimonialsData from "../utilities/testimonialsData";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllServices } from "../features/service/serviceSlice";
+import { useEffect } from "react";
 
 const HomePage = () => {
+  const dispatch = useDispatch();
+  const { services } = useSelector((state) => state.service);
+  console.log(services);
+
+  useEffect(() => {
+    dispatch(getAllServices());
+  }, []);
   return (
     <div>
       <section className="h-[90vh] bg-[#89e219] flex flex-col items-start justify-center  px-6 md:px-16 lg:px-24 xl:px-32 text-white">
@@ -180,7 +190,11 @@ const HomePage = () => {
 
           <div className="mt-10 flex gap-5 lg:gap-10 flex-wrap items-center">
             {serviceCategoriesImg.slice(0, 8).map((cat, index) => (
-              <Link to={`/services-cat/${cat.name.toLowerCase()}`} key={index}>
+              <Link
+                to={`/services-cat/${cat.name}`}
+                onClick={() => window.scrollTo(0, 0)}
+                key={index}
+              >
                 <div className="flex flex-col items-center">
                   <img
                     className="h-30 w-30 object-cover rounded-4xl"
@@ -212,7 +226,7 @@ const HomePage = () => {
               </div>
             </Link>
           </div>
-          <ServiceList />
+          <ServiceList data={services.slice(0, 8)} />
         </div>
 
         <div className="mt-20 lg:mt-30">

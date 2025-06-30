@@ -39,7 +39,7 @@ const SignupPage = () => {
     e.preventDefault();
     console.log(userData);
     let result = await dispatch(registerUser(userData));
-    console.log(result);
+    console.log(result); 
 
     if (result.meta.requestStatus === "fulfilled") {
       toast.success("Account Created successful!");

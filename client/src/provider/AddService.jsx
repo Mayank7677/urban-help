@@ -4,6 +4,9 @@ import { GoDotFill } from "react-icons/go";
 import indianStates from "../utilities/indianStates";
 import topCitiesByState from "../utilities/topCitiesByState";
 import serviceCategories from "../utilities/serviceCategories";
+import { useDispatch, useSelector } from "react-redux";
+import toast from "react-hot-toast";
+import { createService } from "../features/service/serviceSlice";
 
 const AddService = () => {
   const [formData, setFormData] = useState({
@@ -40,6 +43,57 @@ const AddService = () => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
+  const dispatch = useDispatch();
+  let { loading, error } = useSelector((state) => state.service);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const formDataUpload = new FormData();
+
+      formDataUpload.append("state", formData.state);
+      formDataUpload.append("city", formData.city);
+      formDataUpload.append("category", formData.category);
+      formDataUpload.append("title", formData.title);
+      formDataUpload.append("price", formData.price);
+      formDataUpload.append("contactNumber", formData.contactNumber);
+      formDataUpload.append("description", formData.description);
+
+      formDataUpload.append("images", images.image1);
+      formDataUpload.append("images", images.image2);
+      formDataUpload.append("images", images.image3);
+
+      console.log(formDataUpload);
+      // return;
+
+      let result = await dispatch(createService(formDataUpload));
+
+      if (result.meta.requestStatus === "fulfilled") {
+        toast.success("Service added successful!");
+      }
+
+      setFormData({
+        state: "",
+        city: "",
+        category: "",
+        title: "",
+        price: "",
+        description: "",
+        contactNumber: "",
+      });
+
+      setImages({
+        image1: "",
+        image2: "",
+        image3: "",
+      });
+    } catch (err) {
+      console.error(err);
+      toast.error(err?.response?.data?.message || "Something went wrong");
+    }
+  };
+
   return (
     <div className="px-2 sm:px-5 pb-10 w-full">
       <div className="flex items-center gap-2 md:gap-4">
@@ -48,7 +102,7 @@ const AddService = () => {
         </span>
         <p className="text-3xl lg:text-4xl text-neutral-800 ">Add Service</p>
       </div>
-      <form className="w-full">
+      <form onSubmit={handleSubmit} className="w-full">
         <div className="mt-10  max-sm:w-full sm:w-3/4">
           <div className="flex flex-col sm:flex-row items-center gap-5 w-full">
             <div className="w-full">
@@ -225,7 +279,7 @@ const AddService = () => {
           type="submit"
           className="mt-6 px-6 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700"
         >
-          Submit
+          {loading ? 'Loading...' : 'Submit'}
         </button>
       </form>
     </div>

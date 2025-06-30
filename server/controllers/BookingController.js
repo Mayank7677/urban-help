@@ -3,15 +3,17 @@ const ServiceModel = require("../models/ServiceModel");
 
 // Create Booking
 exports.createBooking = async (req, res) => {
+  console.log(req.body)
   try {
-    const { serviceId, date, time, notes } = req.body;
+    const { date, time, notes, name, myNumber, address } = req.body;
+    const { id } = req.params;
 
-    let service = await ServiceModel.findById(serviceId);
+    let service = await ServiceModel.findById(id);
     if (!service) return res.status(404).json({ message: "Service not found" });
 
     // Prevent same service booked at same time by different users
     const alreadyBooked = await bookingModel.findOne({
-      service: serviceId,
+      service: id,
       date,
       time,
       status: { $ne: "Rejected" }, // ignore rejected ones
@@ -26,7 +28,7 @@ exports.createBooking = async (req, res) => {
     // prevent same user booking same service on same day
     const userDoubleBooking = await bookingModel.findOne({
       user: req.user._id,
-      service: serviceId,
+      service: id,
       date,
     });
 
@@ -43,6 +45,9 @@ exports.createBooking = async (req, res) => {
       date,
       time,
       notes,
+      name,
+      myNumber,
+      address,
     });
 
     res.status(201).json({ message: "Booking Created", newBooking });
@@ -57,8 +62,11 @@ exports.getMyBookings = async (req, res) => {
   try {
     const bookings = await bookingModel
       .find({ user: req.user._id })
-      .populate("service", "title category")
-      .populate("provider", "name");
+      .populate(
+        "service",
+        "title category images rating city state contactNumber price"
+      )
+      .populate("provider", "name email phone");
 
     res.status(200).json(bookings);
   } catch (error) {
@@ -71,10 +79,14 @@ exports.getMyBookings = async (req, res) => {
 // Get Booking ( Provider )
 exports.getProviderBookings = async (req, res) => {
   try {
+    const { status } = req.params;
     const bookings = await bookingModel
-      .find({ provider: req.user._id })
-      .populate("service", "title ")
-      .populate("user", "name email");
+      .find({ provider: req.user._id , status })
+      .populate(
+        "service",
+        "title category city state rating images contactNumber reviews price  "
+      )
+      .populate("user", "name email phone");
 
     res.status(200).json(bookings);
   } catch (error) {

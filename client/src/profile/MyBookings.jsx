@@ -5,6 +5,10 @@ import { GoDotFill, GoLocation } from "react-icons/go";
 import { HiOutlineMail } from "react-icons/hi";
 import { PiCityThin } from "react-icons/pi";
 import { Link } from "react-router-dom";
+import { useGetMyBookingsQuery } from "../features/booking/bookingApi";
+import { IoIosTimer } from "react-icons/io";
+import { CiCalendarDate } from "react-icons/ci";
+import { PiAddressBookThin } from "react-icons/pi";
 
 const getStars = (rating) => {
   const fullStars = Math.floor(rating);
@@ -45,6 +49,8 @@ const getStars = (rating) => {
 };
 
 const MyBookings = () => {
+  const { data, error, isLoading } = useGetMyBookingsQuery();
+  console.log(data);
   return (
     <div>
       <div className="flex items-center gap-2 text-neutral-700">
@@ -54,115 +60,165 @@ const MyBookings = () => {
         <p className="text-3xl md:text-4xl">My Bookings</p>
       </div>
 
-      <div className="mt-3 w-full ">
-        <div className="hidden md:grid md:grid-cols-[3fr_2fr_2fr_1fr] w-full border-b border-gray-300 font-medium text-base py-3 ">
-          <div className="">Service Details</div>
-          <div className="">Location</div>
-          <div className="">Personal Details</div>
-          <div className="pl-[3%]">Manage</div>
-        </div>
-
-        <div className="grid grid-cols-1 max-md:gap-5 md:grid-cols-[3fr_2fr_2fr_1fr] w-full border-b border-gray-300 py-6 first:border-t ">
-          <div className="flex flex-col md:flex-row ">
-            <img
-              className="min-md:w-44 rounded-2xl shadow object-cover"
-              src="https://res.cloudinary.com/dqfhn7rw3/image/upload/v1749667393/hotel_rooms/vxkic8mu89gqidzxl6qw.jpg"
-              alt=""
-            />
-            <div className="flex flex-col gap-1 max-md:mt-3 min-md:ml-4">
-              <div>
-                <p className="text-xl  tracking-tight">Cleaning ,</p>
-                <p className="text-xl  tracking-tight">Home Cleaning</p>
-              </div>
-
-              <div className="flex items-center mb-2">
-                <span className="text-lg font-bold text-indigo-600 mr-2">
-                  ₹599
-                </span>
-                <span className="text-gray-400 text-sm">/ service</span>
-              </div>
-              {getStars(4.7)}
-            </div>
+      {isLoading ? (
+        <p className="mt-20 text-center">Loading...</p>
+      ) : (
+        <div className="mt-3 w-full ">
+          <div className="hidden md:grid md:grid-cols-[3fr_2fr_2fr_1fr] w-full border-b border-gray-300 font-medium text-base py-3 ">
+            <div className="">Service Details</div>
+            <div className="">Location & Time</div>
+            <div className="">Provider Details</div>
+            <div className="pl-[3%]">Status</div>
           </div>
 
-          <div className="flex flex-col gap-1.5 max-md:mt-3 mt-5">
-            <div class="flex items-center gap-2 text-xl text-gray-700  ">
-              <GoLocation className={` text-xl text-black} `} />
-              <span
-                className={`text-gray-700
-                      }`}
-              >
-                Rajasthan,
-              </span>
-            </div>
-            <div class="flex items-center gap-2 text-xl text-gray-700  ">
-              <PiCityThin
-                className={`  text-black
-                      } `}
-              />
-              <span
-                className={`text-gray-700
-                      }`}
-              >
-                Jaipur
-              </span>
-            </div>
-          </div>
+          {[...data].reverse().map((dets, i) => (
+            <div
+              key={i}
+              className="grid grid-cols-1 max-md:gap-5 md:grid-cols-[3fr_2fr_2fr_1fr] w-full border-b border-gray-300 py-6 first:border-t "
+            >
+              <div className="flex flex-col md:flex-row ">
+                <img
+                  className="min-md:w-44 rounded-2xl shadow object-cover"
+                  src={dets.service.images[0]}
+                  alt=""
+                />
+                <div className="flex flex-col gap-1 max-md:mt-3 min-md:ml-4">
+                  <div>
+                    <p className="text-xl  tracking-tight">
+                      {dets.service.category} ,
+                    </p>
+                    <p className="text-xl  tracking-tight">
+                      {dets.service.title}
+                    </p>
+                  </div>
 
-          <div className="flex flex-col gap-1.5 max-md:mt-3 mt-5">
-            <div class="flex items-center gap-1  text-gray-700 tracking-tight ">
-              <BiUser
-                className={` text-lg text-black
+                  <div className="flex items-center mb-2">
+                    <span className="text-lg font-bold text-indigo-600 mr-2">
+                      ₹{dets.service.price}
+                    </span>
+                    <span className="text-gray-400 text-sm">/ service</span>
+                  </div>
+                  {getStars(4.7)}
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-1 max-md:mt-3 mt-5">
+                <div class="flex items-center gap-2  text-gray-700  ">
+                  <PiAddressBookThin className={`text-lg  text-black} `} />
+                  <span
+                    className={`text-gray-700
+                      }`}
+                  >
+                    {dets.address},
+                  </span>
+                </div>
+
+                <div class="flex items-center gap-2  text-gray-700  ">
+                  <GoLocation className={`  text-black} `} />
+                  <span
+                    className={`text-gray-700
+                      }`}
+                  >
+                    {dets.service.state},
+                  </span>
+                </div>
+
+                <div class="flex items-center gap-2 text-gray-700  ">
+                  <PiCityThin
+                    className={`  text-black
                       } `}
-              />
-              <span
-                className={`
+                  />
+                  <span
+                    className={`text-gray-700
+                      }`}
+                  >
+                    {dets.service.city}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-1.5 max-md:mt-3 mt-4">
+                <div class="flex items-center gap-1  text-gray-700 tracking-tight ">
+                  <BiUser
+                    className={` text-lg text-black
+                      } `}
+                  />
+                  <span
+                    className={`
                         text-gray-700
                       }`}
-              >
-                Name: asdfghj
-              </span>
-            </div>
-            <div class="flex items-center gap-1  text-gray-700 tracking-tight ">
-              <HiOutlineMail
-                className={` text-lg text-black
+                  >
+                    {dets.provider.name}
+                  </span>
+                </div>
+                <div class="flex items-center gap-1  text-gray-700 tracking-tight ">
+                  <HiOutlineMail
+                    className={` text-lg text-black
                       } `}
-              />
-              <span
-                className={`text-gray-700
+                  />
+                  <span
+                    className={`text-gray-700
                       }`}
-              >
-                Email: abc@gmail.com
-              </span>
-            </div>
-            <div class="flex items-center gap-1  text-gray-700 tracking-tight ">
-              <CgSmartphone
-                className={` text-lg text-black
+                  >
+                    {dets.provider.email}
+                  </span>
+                </div>
+                <div class="flex items-center gap-1  text-gray-700 tracking-tight ">
+                  <CgSmartphone
+                    className={` text-lg text-black
                       } `}
-              />
-              <span className={`text-gray-700                    }`}>
-                Phone: 12345678
-              </span>
-            </div>
-          </div>
+                  />
+                  <span className={`text-gray-700                    }`}>
+                    {dets.service.contactNumber}
+                  </span>
+                </div>
+              </div>
 
-          <div className="flex flex-col w-fit md:items-center">
-            <>
-              <Link>
-                <button class="px-4 py-1.5 mt-4 text-xs border border-yellow-400 text-yellow-400 rounded-full hover:bg-gray-50 transition-all cursor-pointer font-serif">
-                  Edit
+              <div className="flex flex-col gap-1.5 max-md:mt-3 mt-5">
+                <div class="flex items-center gap-1  text-gray-700 tracking-tight ">
+                  <IoIosTimer
+                    className={` text-lg text-black
+                      } `}
+                  />
+                  <span
+                    className={`
+                        text-gray-700
+                      }`}
+                  >
+                    {dets.time}
+                  </span>
+                </div>
+                <div class="flex items-center gap-1  text-gray-700 tracking-tight ">
+                  <CiCalendarDate
+                    className={` text-lg text-black
+                      } `}
+                  />
+                  <span
+                    className={`text-gray-700
+                      }`}
+                  >
+                    {dets.date}
+                  </span>
+                </div>
+
+                <button
+                  class={`px-4 ml-3 w-fit py-1.5  text-xs border  rounded-full hover:bg-gray-50 transition-all cursor-pointer ${
+                    dets.status === "Pending"
+                      ? "border-yellow-400 text-yellow-400"
+                      : dets.status === "Rejected"
+                      ? "border-red-500 text-red-500"
+                      : dets.status === "Accepted"
+                      ? "border-blue-600 text-blue-600"
+                      : "border-green-600 text-green-600"
+                  }`}
+                >
+                  {dets.status}
                 </button>
-              </Link>
-              <button class="px-4 py-1.5 mt-4 text-xs border border-blue-500 text-blue-500 rounded-full hover:bg-gray-50 transition-all cursor-pointer font-serif">
-                Inactive
-              </button>
-              <button class="px-4 py-1.5 mt-4 text-xs border border-red-500 text-red-500 rounded-full hover:bg-gray-50 transition-all cursor-pointer font-serif">
-                Delete
-              </button>
-            </>
-          </div>
+              </div>
+            </div>
+          ))}
         </div>
-      </div>
+      )}
     </div>
   );
 };

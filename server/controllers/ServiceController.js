@@ -1,11 +1,20 @@
+const { uploadFile } = require("../configs/uploadfile");
 const ServiceModel = require("../models/ServiceModel");
 
 // Create Service
 exports.createService = async (req, res) => {
   try {
+    if (!req.files || !req.files.images) {
+      return res.status(400).json({ message: "Images are required" });
+    }
+
+    const serviceImages = req.files.images;
+    const uploadedImages = await uploadFile(serviceImages);
+
     const newService = await ServiceModel.create({
       ...req.body,
       provider: req.user._id,
+      images: uploadedImages,
     });
     res.status(201).json({ message: "Service created", newService });
   } catch (error) {
@@ -38,7 +47,7 @@ exports.getServiceById = async (req, res) => {
   try {
     const service = await ServiceModel.findById(req.params.id).populate(
       "provider",
-      "name email"
+      "name email profilePic"
     );
     //   .populate("reviews.user", "name");
     if (!service) return res.status(404).json({ message: "Service not found" });
@@ -48,6 +57,39 @@ exports.getServiceById = async (req, res) => {
       .status(500)
       .json({ message: "Error fetching service", error: error.message });
     console.log("error in getServiceById : ", error);
+  }
+};
+
+// Get Services by Category
+exports.getServiceByCategory = async (req, res) => {
+  try {
+    console.log(req.params);
+    const { category } = req.params;
+
+    if (!category) {
+      return res.status(400).json({ message: "Category is required" });
+    }
+
+    const services = await ServiceModel.find({ category }).populate(
+      "provider",
+      "name email profilePic"
+    );
+
+    console.log("services : ", services);
+
+    if (!services || services.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No services found for this category" });
+    }
+
+    res.status(200).json(services);
+  } catch (error) {
+    console.error("Error in getServiceByCategory:", error);
+    res.status(500).json({
+      message: "Error fetching services by category",
+      error: error.message,
+    });
   }
 };
 
