@@ -29,6 +29,20 @@ export const getAllServices = createAsyncThunk(
   }
 );
 
+// GET ALL SERVICES OF PROVIDER
+export const getAllServicesOfProvider = createAsyncThunk(
+  "service/getAllServicesOfProvider",
+  async (status, { rejectWithValue }) => {
+    try {
+      const res = await axiosInstance.get(`/services/getProviderServices/${status}`);
+      console.log(res.data);
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data.message);
+    }
+  }
+);
+
 // GET ONE SERVICE BY ID
 export const getServiceById = createAsyncThunk(
   "service/getOne",
@@ -62,6 +76,7 @@ const serviceSlice = createSlice({
   initialState: {
     services: [],
     servicesByCategory: [],
+    servicesOfProvider: [],
     selectedService: null,
     loading: false,
     error: "",
@@ -73,8 +88,8 @@ const serviceSlice = createSlice({
       state.selectedService = null;
     },
     clearServicesByCategory: (state) => {
-        state.servicesByCategory = [];
-        state.error = "";
+      state.servicesByCategory = [];
+      state.error = "";
     },
   },
 
@@ -104,6 +119,19 @@ const serviceSlice = createSlice({
         state.services = action.payload;
       })
       .addCase(getAllServices.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      // GET ALL SERVICES OF PROVIDER
+      .addCase(getAllServicesOfProvider.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getAllServicesOfProvider.fulfilled, (state, action) => {
+        state.loading = false;
+        state.servicesOfProvider = action.payload;
+      })
+      .addCase(getAllServicesOfProvider.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })
@@ -141,5 +169,6 @@ const serviceSlice = createSlice({
   },
 });
 
-export const { clearSelectedService, clearServicesByCategory } = serviceSlice.actions;
+export const { clearSelectedService, clearServicesByCategory } =
+  serviceSlice.actions;
 export default serviceSlice.reducer;

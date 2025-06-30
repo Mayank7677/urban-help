@@ -41,6 +41,26 @@ exports.getAllServices = async (req, res) => {
   }
 };
 
+// Get All Services By Id
+exports.getProviderServicesByStatus = async (req, res) => {
+  try {
+    const { status } = req.params;
+    const services = await ServiceModel.find({
+      provider: req.user._id,
+      status,
+    })
+      .populate("provider", "name email phone")
+      .sort({ createdAt: -1 });
+
+    res.status(200).json(services);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error fetching services", error: error.message });
+    console.log("error in getAllServices : ", error);
+  }
+};
+
 // Get Single Service by ID
 exports.getServiceById = async (req, res) => {
   console.log(req.params);
@@ -182,5 +202,34 @@ exports.addReview = async (req, res) => {
       .status(500)
       .json({ message: "Failed to add review", error: error.message });
     console.log("error in addReview : ", error);
+  }
+};
+
+// Update Service Status (Provider only)
+exports.updateServiceStatus = async (req, res) => {
+  try {
+    let { id } = req.params;
+    let { state } = req.body;
+    console.log(req.body);
+
+    let service = await ServiceModel.findById(id);
+    if (!service) return res.status(404).json({ message: "Service not found" });
+
+    if (service.provider.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: "You are not authorized" });
+    }
+
+    service.status = state;
+
+    await service.save();
+
+    res.status(200).json({ message: "Status updated", service });
+  } catch (error) {
+    res.status(500).json({
+      message: "Error while updating service status",
+      error: error.message,
+    });
+
+    console.log("error in updateServiceStatus : ", error);
   }
 };

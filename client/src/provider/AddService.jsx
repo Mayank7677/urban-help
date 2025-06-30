@@ -95,7 +95,7 @@ const AddService = () => {
   };
 
   return (
-    <div className="px-2 sm:px-5 pb-10 w-full">
+    <div className="px-2 sm:px-5 w-full">
       <div className="flex items-center gap-2 md:gap-4">
         <span className="md:text-2xl">
           <GoDotFill />
@@ -103,7 +103,7 @@ const AddService = () => {
         <p className="text-3xl lg:text-4xl text-neutral-800 ">Add Service</p>
       </div>
       <form onSubmit={handleSubmit} className="w-full">
-        <div className="mt-10  max-sm:w-full sm:w-3/4">
+        <div className="mt-5  max-sm:w-full sm:w-3/4">
           <div className="flex flex-col sm:flex-row items-center gap-5 w-full">
             <div className="w-full">
               <label
@@ -147,7 +147,7 @@ const AddService = () => {
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center gap-5 w-full mt-5">
+          <div className="flex flex-col sm:flex-row items-center gap-5 w-full mt-3">
             <div className="w-full">
               <label
                 htmlFor="category"
@@ -193,7 +193,7 @@ const AddService = () => {
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row items-center gap-5 w-full mt-5">
+          <div className="flex flex-col sm:flex-row items-center gap-5 w-full mt-3">
             <div className="w-full">
               <label
                 htmlFor="price"
@@ -227,7 +227,7 @@ const AddService = () => {
             </div>
           </div>
 
-          <div className="md:col-span-2 mt-5">
+          <div className="md:col-span-2 mt-3">
             <label
               htmlFor="description"
               className="block  font-medium text-gray-700"
@@ -243,7 +243,7 @@ const AddService = () => {
             ></textarea>
           </div>
 
-          <div className="md:col-span-2 mt-5">
+          <div className="md:col-span-2 mt-3">
             <label className="block  font-medium text-gray-700 mb-1">
               Upload Images
             </label>
@@ -277,7 +277,7 @@ const AddService = () => {
 
         <button
           type="submit"
-          className="mt-6 px-6 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700"
+          className="mt-4 px-6 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700"
         >
           {loading ? 'Loading...' : 'Submit'}
         </button>
