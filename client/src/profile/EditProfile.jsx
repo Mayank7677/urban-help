@@ -148,7 +148,41 @@ const EditProfile = () => {
 
         <form onSubmit={handleSubmit} className="mt-5">
           <div className="max-sm:w-full sm:w-3/4">
-            <div className="flex flex-col sm:flex-row items-center gap-5 w-full">
+            <div className="flex flex-col sm:flex-row items-center gap-5 w-full ">
+              <div className="w-full">
+                <label
+                  htmlFor="name"
+                  className="block  font-medium text-gray-700"
+                >
+                  Name
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  value={userData.name}
+                  onChange={handleChange}
+                  className="mt-1 w-full  px-3 py-2  rounded-xl font-normal border border-gray-400 sm:text-sm outline-none"
+                />
+              </div>
+
+              <div className="w-full">
+                <label
+                  htmlFor="phone"
+                  className="block  font-medium text-gray-700"
+                >
+                  Contact Number
+                </label>
+                <input
+                  type="text"
+                  id="phone"
+                  value={userData.phone}
+                  onChange={handleChange}
+                  className="mt-1 w-full  px-3 py-2  rounded-xl font-normal border border-gray-400 sm:text-sm outline-none"
+                />
+              </div>
+            </div>
+
+            <div className="flex flex-col sm:flex-row items-center gap-5 w-full mt-5">
               <div className="w-full">
                 <label
                   htmlFor="state"
@@ -191,40 +225,6 @@ const EditProfile = () => {
                     </option>
                   ))}
                 </select>
-              </div>
-            </div>
-
-            <div className="flex flex-col sm:flex-row items-center gap-5 w-full mt-5">
-              <div className="w-full">
-                <label
-                  htmlFor="name"
-                  className="block  font-medium text-gray-700"
-                >
-                  Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  value={userData.name}
-                  onChange={handleChange}
-                  className="mt-1 w-full  px-3 py-2  rounded-xl font-normal border border-gray-400 sm:text-sm outline-none"
-                />
-              </div>
-
-              <div className="w-full">
-                <label
-                  htmlFor="phone"
-                  className="block  font-medium text-gray-700"
-                >
-                  Contact Number
-                </label>
-                <input
-                  type="text"
-                  id="phone"
-                  value={userData.phone}
-                  onChange={handleChange}
-                  className="mt-1 w-full  px-3 py-2  rounded-xl font-normal border border-gray-400 sm:text-sm outline-none"
-                />
               </div>
             </div>
           </div>

@@ -17,6 +17,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getServiceById } from "../features/service/serviceSlice";
 import assets from "../assets/assets";
+import Footer from "../components/Footer";
 
 const getStars = (rating) => {
   const fullStars = Math.floor(rating);
@@ -109,8 +110,8 @@ const ServiceDetail = () => {
   if (error) return <p className="text-red-600 text-center">{error}</p>;
 
   return (
-    <div className="mt-25 md:mt-30 pb-10 px-6 md:px-16 lg:px-24 xl:px-32">
-      <div className="flex gap-5 md:gap-7 items-center border-b  border-neutral-400 pb-5">
+    <div className="mt-25 ">
+      <div className="flex gap-5 md:gap-7 items-center border-b  border-neutral-400 pb-5 px-6 md:px-16 lg:px-24 xl:px-32">
         <div>
           <img
             className="w-25 h-25 md:w-40 md:h-40 object-cover rounded-full"
@@ -147,7 +148,7 @@ const ServiceDetail = () => {
         </div>
       </div>
 
-      <div className="mt-6 md:mt-10 flex flex-col gap-8">
+      <div className="mt-6 md:mt-10 flex flex-col gap-8 px-6 md:px-16 lg:px-24 xl:px-32">
         <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-10">
           <div className="flex items-center gap-2 md:gap-4">
             <span className="md:text-2xl">
@@ -198,7 +199,9 @@ const ServiceDetail = () => {
         </div>
       </div>
 
-      {/* <Footer /> */}
+      <div className="mt-25">
+        <Footer />
+      </div>
     </div>
   );
 };

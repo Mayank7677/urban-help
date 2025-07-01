@@ -5,12 +5,13 @@ import { VscAdd } from "react-icons/vsc";
 import { CiBookmarkMinus } from "react-icons/ci";
 import { TfiHome } from "react-icons/tfi";
 import { IoMdDoneAll } from "react-icons/io";
+import { MdWorkspacesFilled } from "react-icons/md";
 
 const ProviderSidebar = () => {
   
 
   const sidebarLinks = [
-    { name: "My Services", path: "/provider", icon: <RxDashboard /> },
+    { name: "My Services", path: "/provider", icon: <MdWorkspacesFilled /> },
     { name: "Add Service", path: "/provider/add-service", icon: <VscAdd /> },
     {
       name: "Manage Bookings",
@@ -21,6 +22,11 @@ const ProviderSidebar = () => {
       name: "Complete Bookings",
       path: "/provider/complete-bookings",
       icon: <IoMdDoneAll />,
+    },
+    {
+      name: "Dashboard",
+      path: "/provider/dashboard",
+      icon: <RxDashboard />,
     },
   ];
 
@@ -52,7 +58,7 @@ const ProviderSidebar = () => {
           <div className="pb-2 border-b border-neutral-300">
             <Link to="/" onClick={() => window.scrollTo(0, 0)}>
               <div
-                className={`flex items-center font-serif cursor-pointer gap-2 py-1 px-2 rounded-r-4xl transition-colors duration-200 
+                className={`flex items-center cursor-pointer gap-2 py-1 px-2 rounded-r-4xl transition-colors duration-200 
                 text-black hover:bg-white hover:text-black`}
               >
                 <p className="text-lg">

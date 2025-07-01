@@ -27,6 +27,7 @@ import { Toaster } from "react-hot-toast";
 import BookService from "./pages/BookService";
 import { getAllServices } from "./features/service/serviceSlice";
 import CompleteBookings from "./provider/CompleteBookings";
+import ProviderDashboard from "./provider/ProviderDashboard";
 
 const App = () => {
   const location = useLocation();
@@ -64,6 +65,17 @@ const App = () => {
     <>
       {!hideNavbar && <Navbar />}
       <Routes>
+        {/* Login , Signup  */}
+        <Route
+          path="/login"
+          element={!user ? <LoginPage /> : <Navigate to={"/"} />}
+        />
+        <Route
+          path="/signup"
+          element={!user ? <SignupPage /> : <Navigate to={"/"} />}
+        />
+
+        {/* UI part */}
         <Route
           path="/"
           element={user ? <HomePage /> : <Navigate to={"/login"} />}
@@ -84,28 +96,26 @@ const App = () => {
           path="/service-details/:id"
           element={user ? <ServiceDetail /> : <Navigate to={"/login"} />}
         />
-        <Route
-          path="/login"
-          element={!user ? <LoginPage /> : <Navigate to={"/"} />}
-        />
-        <Route
-          path="/signup"
-          element={!user ? <SignupPage /> : <Navigate to={"/"} />}
-        />
 
-        <Route path="/provider" element={<ProviderSidebar />}>
-          <Route index element={<MyServices />} />
-          <Route path="add-service" element={<AddService />} />
-          <Route path="manage-bookings" element={<ManageBookings />} />
-          <Route path="complete-bookings" element={<CompleteBookings />} />
-        </Route>
-
+        {/* Profile Section  */}
         <Route
           path="/profile"
           element={user ? <ProfileSidebar /> : <Navigate to={"/login"} />}
         >
           <Route index element={<EditProfile />} />
           <Route path="my-bookings" element={<MyBookings />} />
+        </Route>
+
+        {/* Provide Panel */}
+        <Route
+          path="/provider"
+          element={user ? <ProviderSidebar /> : <Navigate to={"/login"} />}
+        >
+          <Route index element={<MyServices />} />
+          <Route path="add-service" element={<AddService />} />
+          <Route path="manage-bookings" element={<ManageBookings />} />
+          <Route path="complete-bookings" element={<CompleteBookings />} />
+          <Route path="dashboard" element={<ProviderDashboard />} />
         </Route>
       </Routes>
 

@@ -194,7 +194,7 @@ const BookingList = ({ status }) => {
                           onClick={() =>
                             handleStatusChange("Completed", dets._id)
                           }
-                          class="px-4 py-1.5 mt-4 md:mt-10 text-xs  border border-blue-600 text-blue-600 rounded-full hover:bg-gray-50 transition-all cursor-pointer font-serif"
+                          class="px-4 py-1.5 mt-4 md:mt-10 text-xs  border border-blue-600 text-blue-600 rounded-full hover:bg-gray-50 transition-all cursor-pointer "
                         >
                           Complete
                         </button>
@@ -203,7 +203,7 @@ const BookingList = ({ status }) => {
 
                     {status === "Rejected" && (
                       <>
-                        <button class="px-2 py-1.5 mt-4 md:mt-8    text-red-500   rounded-full hover:bg-gray-50 transition-all cursor-pointer font-serif">
+                        <button class="px-2 py-1.5 mt-4 md:mt-8    text-red-500   rounded-full hover:bg-gray-50 transition-all cursor-pointer ">
                           Rejected
                         </button>
                       </>
@@ -215,7 +215,7 @@ const BookingList = ({ status }) => {
                           onClick={() =>
                             handleStatusChange("Accepted", dets._id)
                           }
-                          class="px-4 py-1.5 mt-4 text-xs border border-blue-500 text-blue-500 rounded-full hover:bg-gray-50 transition-all cursor-pointer font-serif"
+                          class="px-4 py-1.5 mt-4 text-xs border border-blue-500 text-blue-500 rounded-full hover:bg-gray-50 transition-all cursor-pointer "
                         >
                           Accept
                         </button>
@@ -224,7 +224,7 @@ const BookingList = ({ status }) => {
                           onClick={() =>
                             handleStatusChange("Rejected", dets._id)
                           }
-                          class="px-4 py-1.5 mt-4 text-xs border border-red-500 text-red-500 rounded-full hover:bg-gray-50 transition-all cursor-pointer font-serif"
+                          class="px-4 py-1.5 mt-4 text-xs border border-red-500 text-red-500 rounded-full hover:bg-gray-50 transition-all cursor-pointer "
                         >
                           Reject
                         </button>

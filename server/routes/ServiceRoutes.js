@@ -17,5 +17,6 @@ router.put("/update/:id", auth, serviceController.updateService);
 router.put("/update-status/:id", auth, serviceController.updateServiceStatus);
 router.delete("/delete/:id", auth, serviceController.deleteService);
 router.post("/review/:id", auth, serviceController.addReview);
+router.get("/filter-data", auth, serviceController.filterData);
 
 module.exports = router;

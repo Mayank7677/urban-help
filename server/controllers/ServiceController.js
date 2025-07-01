@@ -233,3 +233,22 @@ exports.updateServiceStatus = async (req, res) => {
     console.log("error in updateServiceStatus : ", error);
   }
 };
+
+// Filter Data
+exports.filterData = async (req, res) => {
+  try {
+    const { state, city, category, title } = req.query;
+    const query = {};
+
+    if (state) query.state = state;
+    if (city) query.city = city;
+    if (category) query.category = category;
+    if (title) query.title = title;
+
+    const services = await ServiceModel.find(query);
+    res.json(services);
+  } catch (error) {
+    console.error("error in filter : ", error);
+    res.status(500).json({ message: "Failed to filter services" });
+  }
+};

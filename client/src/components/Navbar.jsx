@@ -146,7 +146,7 @@ const Navbar = () => {
                 <DropdownMenuItem>
                   <button
                     onClick={() => dispatch(logout())}
-                    className="text-red-500 font-serif text-sm"
+                    className="text-red-500  text-sm"
                   >
                     Logout
                   </button>

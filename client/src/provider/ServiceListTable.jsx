@@ -161,19 +161,19 @@ const ServiceListTable = ({ status }) => {
               <div className="flex flex-col w-fit md:items-center">
                 <>
                   {/* <Link>
-                    <button class="px-4 py-1.5 mt-4 text-xs border border-yellow-400 text-yellow-400 rounded-full hover:bg-gray-50 transition-all cursor-pointer font-serif">
+                    <button class="px-4 py-1.5 mt-4 text-xs border border-yellow-400 text-yellow-400 rounded-full hover:bg-gray-50 transition-all cursor-pointer ">
                       Edit
                     </button>
                   </Link> */}
                   <button
                     onClick={() => updateStatus(dets._id)}
-                    class="px-4 py-1.5 mt-4 text-xs border border-blue-500 text-blue-500 rounded-full hover:bg-gray-50 transition-all cursor-pointer font-serif"
+                    class="px-4 py-1.5 mt-4 text-xs border border-blue-500 text-blue-500 rounded-full hover:bg-gray-50 transition-all cursor-pointer "
                   >
                     {status === "inactive" ? "Active" : "Inactive"}
                   </button>
                   <button
                     onClick={() => handleDelete(dets._id)}
-                    class="px-4 py-1.5 mt-4 text-xs border border-red-500 text-red-500 rounded-full hover:bg-gray-50 transition-all cursor-pointer font-serif"
+                    class="px-4 py-1.5 mt-4 text-xs border border-red-500 text-red-500 rounded-full hover:bg-gray-50 transition-all cursor-pointer "
                   >
                     Delete
                   </button>

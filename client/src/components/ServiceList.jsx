@@ -1,6 +1,3 @@
-import React from "react";
-import { GoDotFill } from "react-icons/go";
-import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 // Placeholder data
@@ -111,12 +108,11 @@ const getStars = (rating) => {
   );
 };
 
-const ServiceList = ({ data }) => {
-  const { services } = useSelector((state) => state.service);
-  console.log('data----------------------' , data)
+const ServiceList = ({ data, loading }) => {
+  console.log("data----------------------", data);
   return (
     <div className="mt-10 sm:mt-20">
-      {Array.isArray(data) && data.length > 0 ? (
+      {loading ? <p>Loading...</p> : Array.isArray(data) && data.length > 0 ? (
         <div className="max-w-7xl mx-auto grid gap-8 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
           {data.map((service) => (
             <Link
@@ -184,7 +180,7 @@ const ServiceList = ({ data }) => {
           ))}
         </div>
       ) : (
-        null
+        <p>No Services Found</p>
       )}
     </div>
   );

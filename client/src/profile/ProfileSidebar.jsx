@@ -43,7 +43,7 @@ const ProfileSidebar = () => {
           <div className="pb-2 border-b border-neutral-300">
             <Link to="/" onClick={() => window.scrollTo(0, 0)}>
               <div
-                className={`flex items-center font-serif cursor-pointer gap-2 py-1 px-2 rounded-r-4xl transition-colors duration-200 
+                className={`flex items-center  cursor-pointer gap-2 py-1 px-2 rounded-r-4xl transition-colors duration-200 
                 text-black hover:bg-white hover:text-black`}
               >
                 <p className="text-lg">

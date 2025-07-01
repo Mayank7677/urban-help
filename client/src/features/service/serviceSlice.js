@@ -34,7 +34,9 @@ export const getAllServicesOfProvider = createAsyncThunk(
   "service/getAllServicesOfProvider",
   async (status, { rejectWithValue }) => {
     try {
-      const res = await axiosInstance.get(`/services/getProviderServices/${status}`);
+      const res = await axiosInstance.get(
+        `/services/getProviderServices/${status}`
+      );
       console.log(res.data);
       return res.data;
     } catch (err) {
@@ -67,6 +69,22 @@ export const getServiceByCategory = createAsyncThunk(
       return res.data;
     } catch (err) {
       return rejectWithValue(err.response.data.message);
+    }
+  }
+);
+
+// FILTER SERVICES
+export const filterServices = createAsyncThunk(
+  "service/filter",
+  async (filters, { rejectWithValue }) => {
+    try {
+      const query = new URLSearchParams(filters).toString();
+      const res = await axiosInstance.get(`/services/filter-data?${query}`);
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(
+        err.response?.data?.message || "Something went wrong"
+      );
     }
   }
 );
@@ -165,6 +183,20 @@ const serviceSlice = createSlice({
 
         // Ensure servicesByCategory is cleared when not found
         state.servicesByCategory = [];
+      })
+
+      // FILTER SERVICES
+      .addCase(filterServices.pending, (state) => {
+        state.loading = true;
+        state.services = []; // optional: clear old list
+      })
+      .addCase(filterServices.fulfilled, (state, action) => {
+        state.loading = false;
+        state.services = action.payload;
+      })
+      .addCase(filterServices.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   },
 });

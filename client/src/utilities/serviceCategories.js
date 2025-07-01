@@ -44,20 +44,6 @@ const serviceCategories = {
     "Window Frame Repair",
     "Shelf Installation",
   ],
-  PestControl: [
-    "Cockroach Control",
-    "Termite Treatment",
-    "Rodent Control",
-    "Bed Bug Removal",
-    "Mosquito Control",
-  ],
-  ITServices: [
-    "Laptop Repair",
-    "Network Setup",
-    "Printer Troubleshooting",
-    "Software Installation",
-    "CCTV Installation",
-  ],
   Beauty: [
     "Home Salon Service",
     "Haircut",
@@ -70,12 +56,6 @@ const serviceCategories = {
     "Yoga at Home",
     "Zumba Sessions",
     "Home Gym Setup",
-  ],
-  HomeSecurity: [
-    "CCTV Installation",
-    "Video Door Phone Setup",
-    "Smart Lock Installation",
-    "Alarm System Setup",
   ],
   Vehicle: ["Car Wash", "Car AC Repair", "Bike Servicing", "Wheel Alignment"],
   Gardening: [
@@ -90,32 +70,19 @@ const serviceCategories = {
     "Office Relocation",
     "Storage Services",
   ],
-  Laundry: ["Dry Cleaning", "Wash & Iron", "Curtain Cleaning", "Shoe Cleaning"],
-  Education: [
-    "Home Tutor",
-    "Language Classes",
-    "Music Lessons",
-    "Competitive Exam Prep",
-  ],
-  EventManagement: [
+  'Event-Management': [
     "Birthday Decoration",
     "Wedding Planning",
     "Corporate Event Setup",
     "Photography & Videography",
   ],
-  Babysitting: [
+  'Baby-sitting': [
     "Full-Day Nanny",
     "Hourly Babysitting",
     "Infant Care",
     "After-School Help",
   ],
-  PetCare: ["Dog Walking", "Pet Grooming", "Pet Training", "Veterinary Visits"],
-  InteriorDesign: [
-    "Modular Kitchen",
-    "False Ceiling Design",
-    "2D/3D Layout Planning",
-    "Home Renovation Consulting",
-  ],
+  'Pet-Care': ["Dog Walking", "Pet Grooming", "Pet Training", "Veterinary Visits"],
   Mechanic: [
     "Engine Diagnosis",
     "Brake Repair",

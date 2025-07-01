@@ -64,9 +64,10 @@ const MyBookings = () => {
         <p className="mt-20 text-center">Loading...</p>
       ) : (
         <div className="mt-3 w-full ">
-          <div className="hidden md:grid md:grid-cols-[3fr_2fr_2fr_1fr] w-full border-b border-gray-300 font-medium text-base py-3 ">
+          <div className="hidden lg:grid lg:grid-cols-[3fr_1.5fr_1.5fr_2fr_1fr] w-full border-b border-gray-300 font-medium text-base py-3 ">
             <div className="">Service Details</div>
-            <div className="">Location & Time</div>
+            <div className="">Location</div>
+            <div className="">Date & Time</div>
             <div className="">Provider Details</div>
             <div className="pl-[3%]">Status</div>
           </div>
@@ -74,7 +75,7 @@ const MyBookings = () => {
           {[...data].reverse().map((dets, i) => (
             <div
               key={i}
-              className="grid grid-cols-1 max-md:gap-5 md:grid-cols-[3fr_2fr_2fr_1fr] w-full border-b border-gray-300 py-6 first:border-t "
+              className="grid grid-cols-1 max-md:gap-5 lg:grid-cols-[3fr_1.5fr_1.5fr_2fr_1fr] w-full border-b border-gray-300 py-6 first:border-t "
             >
               <div className="flex flex-col md:flex-row ">
                 <img
@@ -137,6 +138,18 @@ const MyBookings = () => {
                 </div>
               </div>
 
+              <div className="flex flex-col gap-1.5 max-md:mt-3 mt-5">
+                <div class="flex items-center gap-1  text-gray-700 tracking-tight ">
+                  <IoIosTimer className={` text-lg text-black} `} />
+                  <span className={` text-gray-700}`}>{dets.time}</span>
+                </div>
+
+                <div class="flex items-center gap-1  text-gray-700 tracking-tight ">
+                  <CiCalendarDate className={` text-lg text-black} `} />
+                  <span className={`text-gray-700}`}>{dets.date}</span>
+                </div>
+              </div>
+
               <div className="flex flex-col gap-1.5 max-md:mt-3 mt-4">
                 <div class="flex items-center gap-1  text-gray-700 tracking-tight ">
                   <BiUser
@@ -174,35 +187,9 @@ const MyBookings = () => {
                 </div>
               </div>
 
-              <div className="flex flex-col gap-1.5 max-md:mt-3 mt-5">
-                <div class="flex items-center gap-1  text-gray-700 tracking-tight ">
-                  <IoIosTimer
-                    className={` text-lg text-black
-                      } `}
-                  />
-                  <span
-                    className={`
-                        text-gray-700
-                      }`}
-                  >
-                    {dets.time}
-                  </span>
-                </div>
-                <div class="flex items-center gap-1  text-gray-700 tracking-tight ">
-                  <CiCalendarDate
-                    className={` text-lg text-black
-                      } `}
-                  />
-                  <span
-                    className={`text-gray-700
-                      }`}
-                  >
-                    {dets.date}
-                  </span>
-                </div>
-
+              <div className="flex flex-col gap-1.5 max-md:mt-3 md:mt-10">
                 <button
-                  class={`px-4 ml-3 w-fit py-1.5  text-xs border  rounded-full hover:bg-gray-50 transition-all cursor-pointer ${
+                  class={`px-4 w-fit py-1.5  text-xs border  rounded-full  ${
                     dets.status === "Pending"
                       ? "border-yellow-400 text-yellow-400"
                       : dets.status === "Rejected"

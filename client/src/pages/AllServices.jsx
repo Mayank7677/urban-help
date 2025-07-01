@@ -10,7 +10,10 @@ import topCitiesByState from "../utilities/topCitiesByState";
 import serviceCategories from "../utilities/serviceCategories";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllServices } from "../features/service/serviceSlice";
+import {
+  filterServices,
+  getAllServices,
+} from "../features/service/serviceSlice";
 
 const allServices = [
   {
@@ -153,12 +156,8 @@ const getStars = (rating) => {
 const AllServices = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { services } = useSelector((state) => state.service);
+  const { services, loading } = useSelector((state) => state.service);
   console.log(services);
-
-  useEffect(() => {
-    dispatch(getAllServices());
-  }, []);
 
   const [formData, setFormData] = useState({
     state: "",
@@ -185,6 +184,15 @@ const AllServices = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
+
+  useEffect(() => {
+    const hasAnyFilter = Object.values(formData).some(Boolean);
+    if (hasAnyFilter) {
+      dispatch(filterServices(formData));
+    } else {
+      dispatch(getAllServices());
+    }
+  }, [formData, dispatch]);
   return (
     <>
       <div className=" my-20 md:my-30 px-6 md:px-16 lg:px-24 xl:px-32">
@@ -322,7 +330,7 @@ const AllServices = () => {
           </div>
 
           <div>
-            <ServiceList data={services} />
+            <ServiceList data={services} loading = {loading} />
           </div>
         </div>
       </div>
