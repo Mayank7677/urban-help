@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 const BookService = () => {
   const location = useLocation();
   const { data } = location.state || {};
+  console.log(data);
   const [date, setDate] = useState(new Date());
   const [timeSlot, setTimeSlot] = useState([]);
   const [selectedTime, setSelectedTime] = useState();
@@ -47,11 +48,12 @@ const BookService = () => {
 
   const [bookingData, setBookingData] = useState({
     name: "",
-    contactNumber: "",
+    myNumber: "",
     address: "",
     notes: "",
     date: "",
     time: "",
+    totalAmount: data?.price,
   });
 
   const handleChange = (e) => {
@@ -78,7 +80,7 @@ const BookService = () => {
 
     if (
       !bookingData.name ||
-      !bookingData.contactNumber ||
+      !bookingData.myNumber ||
       !bookingData.address ||
       !bookingData.time
     ) {
@@ -105,6 +107,7 @@ const BookService = () => {
         notes: "",
         date: new Date().toISOString().split("T")[0],
         time: "",
+        totalAmount: "",
       });
       setSelectedTime(null);
 
@@ -112,7 +115,6 @@ const BookService = () => {
       setTimeout(() => {
         navigate("/profile/my-bookings");
       }, 1000);
-      
     } catch (err) {
       console.log(err);
       console.log(error);
@@ -268,6 +270,16 @@ const BookService = () => {
                 rows="4"
                 className="mt-1 w-full  px-3 py-2  rounded-xl font-normal border border-gray-400 sm:text-sm outline-none resize-none"
               ></textarea>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3 ">
+            <p className="block  font-medium text-gray-700">Total Amount :</p>
+            <div>
+              <span className="text-2xl font-bold text-indigo-600 mr-2">
+                ₹{data?.price}
+              </span>
+              <span className="text-gray-400 text-md">/ service</span>
             </div>
           </div>
 

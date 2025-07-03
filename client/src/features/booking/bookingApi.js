@@ -27,7 +27,7 @@ export const bookingApi = createApi({
       query: ({ id, status }) => ({
         url: `/bookings/update/${id}`,
         method: "PATCH",
-        body: {status},
+        body: { status },
       }),
     }),
 
@@ -38,6 +38,10 @@ export const bookingApi = createApi({
     getProviderBookings: builder.query({
       query: ({ status }) => `/bookings/providerBookings/${status}`,
     }),
+
+    getDataForCards: builder.query({
+      query: () => `/bookings/dash-cards-stats`,
+    }),
   }),
 });
 
@@ -46,4 +50,5 @@ export const {
   useGetMyBookingsQuery,
   useGetProviderBookingsQuery,
   useUpdateBookingMutation,
+  useGetDataForCardsQuery,
 } = bookingApi;

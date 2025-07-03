@@ -8,10 +8,17 @@ import { IoMdDoneAll } from "react-icons/io";
 import { MdWorkspacesFilled } from "react-icons/md";
 
 const ProviderSidebar = () => {
-  
-
   const sidebarLinks = [
-    { name: "My Services", path: "/provider", icon: <MdWorkspacesFilled /> },
+    {
+      name: "Dashboard",
+      path: "/provider",
+      icon: <RxDashboard />,
+    },
+    {
+      name: "My Services",
+      path: "/provider/my-services",
+      icon: <MdWorkspacesFilled />,
+    },
     { name: "Add Service", path: "/provider/add-service", icon: <VscAdd /> },
     {
       name: "Manage Bookings",
@@ -22,11 +29,6 @@ const ProviderSidebar = () => {
       name: "Complete Bookings",
       path: "/provider/complete-bookings",
       icon: <IoMdDoneAll />,
-    },
-    {
-      name: "Dashboard",
-      path: "/provider/dashboard",
-      icon: <RxDashboard />,
     },
   ];
 

@@ -111,11 +111,11 @@ const App = () => {
           path="/provider"
           element={user ? <ProviderSidebar /> : <Navigate to={"/login"} />}
         >
-          <Route index element={<MyServices />} />
+          <Route path="my-services" element={<MyServices />} />
           <Route path="add-service" element={<AddService />} />
           <Route path="manage-bookings" element={<ManageBookings />} />
           <Route path="complete-bookings" element={<CompleteBookings />} />
-          <Route path="dashboard" element={<ProviderDashboard />} />
+          <Route index element={<ProviderDashboard />} />
         </Route>
       </Routes>
 
