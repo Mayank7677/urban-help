@@ -61,10 +61,10 @@ const ProviderDashboard = () => {
             onClick={() => navigate(dets.link)}
             className={`w-full ${
               dets.link && "cursor-pointer"
-            } max-[400px]:px-4 px-7 h-30 gap-2 border  rounded-3xl flex flex-col justify-center text-neutral-800 border-neutral-300`}
+            } max-[400px]:px-4 px-7 h-30 gap-2 border  rounded-3xl flex flex-col justify-center text-neutral-800 border-neutral-300 hover:shadow-[0px_2px_3px_-1px_rgba(0,0,0,0.1),0px_1px_0px_0px_rgba(25,28,33,0.02),0px_0px_0px_1px_rgba(25,28,33,0.08)]`}
           >
             <div className="flex items-center justify-between">
-              <p className="font-serif text-xl  tracking-tight flex items-center gap-1">
+              <p className="text-xl  tracking-tight flex items-center gap-1">
                 <span className="text-2xl">{dets.icon}</span>
                 {dets.title}
               </p>
@@ -78,8 +78,8 @@ const ProviderDashboard = () => {
       </div>
       {/* Charts  */}
       <div className="flex flex-col lg:flex-row gap-10 mt-10">
-        <div className="w-full">
-          <BookingBarChart/>
+        <div className="w-full ">
+          <BookingBarChart />
         </div>
 
         <div className="w-full">
