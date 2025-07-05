@@ -1,28 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-  import axiosInstance from "../../configs/api";
+import axiosInstance from "../../configs/api";
 import { act } from "react";
-
-export const registerUser = createAsyncThunk(
-  "auth/registerThunk",
-  async ({ name, email, password, city, state, role }, thunkAPI) => {
-    try {
-      const res = await axiosInstance.post("/auth/register", {
-        name,
-        email,
-        password,
-        city,
-        state,
-        role,
-      });
-
-      return res.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(
-        err.response?.data?.message || "Register failed"
-      );
-    }
-  }
-);
 
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
@@ -50,6 +28,28 @@ export const checkAuth = createAsyncThunk(
       return res.data.user; // return user object only
     } catch (err) {
       return thunkAPI.rejectWithValue("Session expired or invalid");
+    }
+  }
+);
+
+export const registerUser = createAsyncThunk(
+  "auth/registerThunk",
+  async ({ name, email, password, city, state, role }, thunkAPI) => {
+    try {
+      const res = await axiosInstance.post("/auth/register", {
+        name,
+        email,
+        password,
+        city,
+        state,
+        role,
+      });
+
+      return res.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        err.response?.data?.message || "Register failed"
+      );
     }
   }
 );

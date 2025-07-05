@@ -98,7 +98,7 @@ const serviceSlice = createSlice({
     selectedService: null,
     loading: false,
     error: "",
-    currentCategory: "", // <-- add this
+    currentCategory: "", 
   },
 
   reducers: {
