@@ -39,22 +39,24 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
   try {
+    console.log(req.body)
     const { email, password } = req.body;
 
     const checkUser = await userModel.findOne({ email });
-
+    console.log("checkUser : ", checkUser)
     if (!checkUser) {
       return res.status(400).json({ message: "Invalid credentials" });
     }
 
     const isMatch = await bcrypt.compare(password, checkUser.password);
+    console.log(isMatch)
     if (!isMatch)
       return res.status(401).json({ message: "Invalid credentials" });
-
+ 
     const token = await generateToken(email);
 
     const user = {
-      name: checkUser.name,
+      name: checkUser.name, 
       email: checkUser.email,
       role: checkUser.role,
       city: checkUser.city,

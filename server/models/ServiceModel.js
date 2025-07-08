@@ -11,12 +11,12 @@ const serviceSchema = new mongoose.Schema(
       type: String, // Electrician", "AC Repair
       required: true,
       trim: true,
-    },
+    }, 
     description: String,
     category: String, // Home Services, Cleaning, Tutoring
     price: {
       type: Number,
-      required: true,
+      required: true, 
     },
     city: String,
     state: String,

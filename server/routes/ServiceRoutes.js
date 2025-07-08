@@ -1,6 +1,5 @@
 const serviceController = require("../controllers/ServiceController");
 const express = require("express");
-const { route } = require("./UserRoutes");
 const auth = require("../middlewares/auth");
 const router = express.Router();
 

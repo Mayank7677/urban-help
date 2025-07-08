@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "../../configs/api";
 import { act } from "react";
+import toast from "react-hot-toast";
 
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
@@ -14,7 +15,9 @@ export const loginUser = createAsyncThunk(
       return res.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(
-        err.response.data.message || "Login Failed"
+        toast.error("Login failed. Please check your email and password."),
+
+        error.response.data.message || "Login Failed"
       );
     }
   }

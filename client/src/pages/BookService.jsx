@@ -289,7 +289,7 @@ const BookService = () => {
               disabled={isLoading}
               className="cursor-pointer px-6 py-2 bg-lime-500 hover:bg-lime-600 text-white rounded-lg disabled:opacity-50"
             >
-              {isLoading ? "Booking..." : "Pay Now"}
+              {isLoading ? "Booking..." : "Book Now"}
             </button>
           </div>
         </div>

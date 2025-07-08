@@ -189,7 +189,7 @@ const MyBookings = () => {
 
               <div className="flex flex-col gap-1.5 max-md:mt-3 md:mt-10">
                 <button
-                  class={`px-4 w-fit py-1.5  text-xs border  rounded-full  ${
+                  className={`px-4 w-fit py-1.5  text-xs border rounded-full  ${
                     dets.status === "Pending"
                       ? "border-yellow-400 text-yellow-400"
                       : dets.status === "Rejected"
@@ -201,6 +201,14 @@ const MyBookings = () => {
                 >
                   {dets.status}
                 </button>
+
+                {dets.status === "Accepted" && (
+                  <button
+                    className={`px-4 w-fit py-1.5  text-xs border border-neutral-400 cursor-pointer  rounded-full `}
+                  >
+                    Pay Now
+                  </button>
+                )}
               </div>
             </div>
           ))}

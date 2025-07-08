@@ -105,7 +105,7 @@ exports.getProviderBookings = async (req, res) => {
 exports.updateBookings = async (req, res) => {
   try {
     let { id } = req.params;
-    let { status } = req.body;
+    let { status } = req.body; 
 
     let booking = await bookingModel.findById(id);
     if (!booking) return res.status(404).json({ message: "Booking not found" });

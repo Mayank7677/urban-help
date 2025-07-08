@@ -8,6 +8,7 @@ const app = express();
 const userRoutes = require("./routes/UserRoutes");
 const serviceRoutes = require("./routes/ServiceRoutes");
 const bookingRoutes = require("./routes/BookingRoutes");
+const transactionRoutes = require("./routes/TransactionRoutes");
 
 // Middlewares
 app.use(express.json());
@@ -18,9 +19,10 @@ app.use(fileUpload());
 app.use("/api/auth", userRoutes);
 app.use("/api/services", serviceRoutes);
 app.use("/api/bookings", bookingRoutes);
+app.use("/api/transactions", transactionRoutes);
 
 app.get("/", (req, res) => {
-  res.send("Working"); 
+  res.send("Working");
 });
 
 module.exports = app;
