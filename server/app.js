@@ -20,7 +20,7 @@ app.use("/api/services", serviceRoutes);
 app.use("/api/bookings", bookingRoutes);
 
 app.get("/", (req, res) => {
-  res.send("Working");
+  res.send("Working"); 
 });
 
 module.exports = app;
