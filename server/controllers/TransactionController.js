@@ -14,6 +14,7 @@ const razorpayInstance = new razorpay({
 exports.createOrder = async (req, res) => {
   try {
     const { amount } = req.body; // amount in rupees
+    console.log(amount);
 
     const options = {
       amount: amount * 100,
@@ -21,7 +22,7 @@ exports.createOrder = async (req, res) => {
       receipt: `receipt_order_${Date.now()}`,
     };
 
-    const order = await razorpay.orders.create(options);
+    const order = await razorpayInstance.orders.create(options);
     res.status(200).json(order);
   } catch (err) {
     console.error(err);
@@ -41,7 +42,7 @@ exports.verifyPayment = async (req, res) => {
 
     const body = razorpay_order_id + "|" + razorpay_payment_id;
     const expectedSignature = crypto
-      .createHmac("sha256", process.env.RAZORPAY_SECRET)
+      .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
       .update(body.toString())
       .digest("hex");
 

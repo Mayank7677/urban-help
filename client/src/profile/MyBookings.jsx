@@ -9,6 +9,9 @@ import { useGetMyBookingsQuery } from "../features/booking/bookingApi";
 import { IoIosTimer } from "react-icons/io";
 import { CiCalendarDate } from "react-icons/ci";
 import { PiAddressBookThin } from "react-icons/pi";
+import axiosInstance from "../configs/api";
+import toast from "react-hot-toast";
+import { MdOutlineFileDownloadDone } from "react-icons/md";
 
 const getStars = (rating) => {
   const fullStars = Math.floor(rating);
@@ -51,6 +54,64 @@ const getStars = (rating) => {
 const MyBookings = () => {
   const { data, error, isLoading } = useGetMyBookingsQuery();
   console.log(data);
+
+  const handlePayNow = async (bookingId, totalAmount) => {
+    try {
+      // 1. Create order from backend
+      const { data } = await axiosInstance.post("/transactions/create-order", {
+        amount: totalAmount,
+      });
+
+      if (!data || !data.id) {
+        toast.error("Order creation failed");
+        return;
+      }
+
+      // 2. Init Razorpay
+      const options = {
+        key: import.meta.env.VITE_RAZORPAY_KEY_ID,
+        amount: data.amount,
+        currency: data.currency,
+        name: "Urban-Help",
+        description: "Service Booking Payment",
+        order_id: data.id,
+        handler: async function (response) {
+          try {
+            const verifyRes = await axiosInstance.post(
+              "/transactions/verify-payment",
+              {
+                razorpay_order_id: response.razorpay_order_id,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+                bookingId, // Send the booking ID
+              }
+            );
+
+            toast.success("Payment successful!");
+            // Redirect or update UI
+          } catch (err) {
+            console.error("Verification failed", err);
+            toast.error("Payment verification failed");
+          }
+        },
+        prefill: {
+          name: "Mayank Panwar", // You can use user's name
+          email: "user@example.com", // optional
+          contact: "9999999999", // optional
+        },
+        theme: {
+          color: "#3b82f6",
+        },
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    } catch (err) {
+      console.log("Error in handlePayNow", err);
+      toast.error("Something went wrong");
+    }
+  };
+
   return (
     <div>
       <div className="flex items-center gap-2 text-neutral-700">
@@ -202,11 +263,23 @@ const MyBookings = () => {
                   {dets.status}
                 </button>
 
-                {dets.status === "Accepted" && (
+                {dets.status === "Accepted" &&
+                  dets.paymentStatus === "Unpaid" && (
+                    <button
+                      onClick={() => handlePayNow(dets._id, dets.service.price)}
+                      className={`px-4 w-fit py-1.5  text-xs border border-neutral-400 cursor-pointer  rounded-full `}
+                    >
+                      Pay Now
+                    </button>
+                  )}
+                {dets.paymentStatus === "Paid" && (
                   <button
-                    className={`px-4 w-fit py-1.5  text-xs border border-neutral-400 cursor-pointer  rounded-full `}
+                    className={`px-4 w-fit py-1.5  text-xs border border-green-600 text-green-600  rounded-full flex items-center gap-2`}
                   >
-                    Pay Now
+                    <span>
+                      <MdOutlineFileDownloadDone size={16} />
+                    </span>
+                    Paid
                   </button>
                 )}
               </div>
@@ -217,5 +290,4 @@ const MyBookings = () => {
     </div>
   );
 };
-
 export default MyBookings;

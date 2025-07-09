@@ -15,6 +15,7 @@ export const bookingApi = createApi({
   }),
 
   endpoints: (builder) => ({
+    
     createBooking: builder.mutation({
       query: ({ id, bookingData }) => ({
         url: `/bookings/create/${id}`,
